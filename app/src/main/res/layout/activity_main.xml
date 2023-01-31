@@ -53,6 +53,11 @@
         android:layout_marginLeft="65dp"
         android:layout_marginRight="65dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="하이"/>
+
 
 
 </LinearLayout>
