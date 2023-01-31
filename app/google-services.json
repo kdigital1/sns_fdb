@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "250128366284",
+    "firebase_url": "https://messanger-fdb-default-rtdb.firebaseio.com",
+    "project_id": "messanger-fdb",
+    "storage_bucket": "messanger-fdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250128366284:android:a8a8f244e148869dfde069",
+        "android_client_info": {
+          "package_name": "com.example.sns"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "250128366284-femlc3te6pjpc4bltegamkfeakpv0240.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATwDpKOMCPm63AgNbvkV16GNiclGdi73A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "250128366284-femlc3te6pjpc4bltegamkfeakpv0240.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
