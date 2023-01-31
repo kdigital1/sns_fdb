@@ -104,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                                                 public void onSuccess(Void aVoid) {
                                                 }
                                             });
-
                                         }
                                     }
                                 });
