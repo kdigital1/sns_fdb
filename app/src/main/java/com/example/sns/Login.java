@@ -1,7 +1,10 @@
 package com.example.sns;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +38,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
 import java.util.Arrays;
 
 public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
@@ -107,7 +113,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         btnFaceLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //facebookLogin();
+                facebookLogin();
             }
         });
         btnGoogleLogin.setOnClickListener(new View.OnClickListener() {
@@ -116,27 +122,27 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 signIn();
             }
         });
-    //    printHashKey();
+        //printHashKey();
 
 
     }
-    //페이스북 해쉬 값
-//    public void printHashKey() {
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                String hashKey = new String(Base64.encode(md.digest(), 0));
-//                Log.e("TAG", "printHashKey() Hash Key: " + hashKey);
-//            }
-//        } catch (NoSuchAlgorithmException e) {
-//            Log.e("TAG", "printHashKey()", e);
-//        } catch (Exception e) {
-//            Log.e("TAG", "printHashKey()", e);
-//        }
-//    }
-
+/*
+    public void printHashKey() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String hashKey = new String(Base64.encode(md.digest(), 0));
+                Log.e("TAG", "printHashKey() Hash Key: " + hashKey);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("TAG", "printHashKey()", e);
+        } catch (Exception e) {
+            Log.e("TAG", "printHashKey()", e);
+        }
+    }
+*/
     private void facebookLogin() {
         loginManager.getInstance()
                 .logInWithReadPermissions(this, Arrays.asList("email","public_profile"));

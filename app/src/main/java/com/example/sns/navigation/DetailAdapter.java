@@ -52,7 +52,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
     String uid;
 
-    int check=3;
 
     Map<String,Boolean> favori  = new HashMap<>();
 

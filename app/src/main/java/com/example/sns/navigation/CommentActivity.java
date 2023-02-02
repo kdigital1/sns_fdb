@@ -30,7 +30,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.example.sns.navigation.model.AlarmDTO;
 import com.example.sns.navigation.model.ContentDTO.Comment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CommentActivity extends AppCompatActivity {
     private String contentUid = null;
@@ -64,7 +66,11 @@ public class CommentActivity extends AppCompatActivity {
                 comment.setUserId(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 comment.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
                 comment.setComment(comment_edit_message.getText().toString());
-                comment.setTimestamp(String.valueOf(System.currentTimeMillis()));
+                Long now =  System.currentTimeMillis();
+                Date mDate = new Date(now);
+                SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                String getTime = simpleDate.format(mDate);
+                comment.setTimestamp(getTime);
                 commentAlarm(destinationUid,comment_edit_message.getText().toString());
                 FirebaseFirestore.getInstance().collection("images").document(contentUid)
                         .collection("comments").document().set(comment);

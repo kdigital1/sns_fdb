@@ -6,10 +6,12 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +43,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.Signature;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -154,14 +159,13 @@ public class MainActivity extends AppCompatActivity{
 
         
 
-        //    getHashKey();
+//            getHashKey();
     }
 
 
 
 
-    /*
-    //해시값 추출 하는 방법
+/*
     private void getHashKey(){
         PackageInfo packageInfo = null;
         try {
@@ -181,7 +185,8 @@ public class MainActivity extends AppCompatActivity{
                 Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
             }
         }
-    }*/
+    }
+    */
     public void setFrag(int n){
         fm = getSupportFragmentManager();
         ft = fm.beginTransaction();

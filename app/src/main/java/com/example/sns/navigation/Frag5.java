@@ -424,15 +424,17 @@ public class Frag5 extends Fragment {
 //                    Toast.makeText(getContext(), pstr, Toast.LENGTH_SHORT).show();
                 }
             });
-            account_iv_profile.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent photoPickIntent = new Intent(Intent.ACTION_PICK);
-                    photoPickIntent.setType("image/*");
-                    getActivity().startActivityForResult(photoPickIntent,PICK_PROFILE_FROM_ALBUM);
+            if(uid.equals(currentUserUid)) {
+                account_iv_profile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent photoPickIntent = new Intent(Intent.ACTION_PICK);
+                        photoPickIntent.setType("image/*");
+                        getActivity().startActivityForResult(photoPickIntent, PICK_PROFILE_FROM_ALBUM);
 
-                }
-            });
+                    }
+                });
+            }
         }
 
         @Override
