@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="home">
+    </item>
+    <item
+        android:id="@+id/action_search"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="search">
+    </item>
+    <item
+        android:id="@+id/action_add_photo"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_add_a_photo_24"
+        android:title="upload_image">
+    </item>
+    <item
+        android:id="@+id/action_favorite_alarm"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_favorite_border_24"
+        android:title="favorite">
+    </item>
+    <item
+        android:id="@+id/action_account"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="account">
+    </item>
+
+</menu>

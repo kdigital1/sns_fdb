@@ -1,4 +1,4 @@
-package com.example.sns;
+package com.psw.sns;
 
 import org.junit.Test;
 
