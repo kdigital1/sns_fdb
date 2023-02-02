@@ -9,18 +9,34 @@
         android:layout_margin="7.5dp"
         android:layout_width="35dp"
         android:layout_height="35dp"/>
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
     <TextView
         android:id="@+id/commentviewitem_textview_profile"
         android:textStyle="bold"
-        android:layout_margin="7.5dp"
+        android:layout_margin="3dp"
         android:text="UserID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
     <TextView
-        android:id="@+id/commentviewitem_textview_comment"
-        android:layout_margin="7.5dp"
+        android:id="@+id/commentviewitem_timestamp"
+        android:layout_margin="3dp"
         android:text="Message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+</LinearLayout>
+
+    <TextView
+        android:id="@+id/commentviewitem_textview_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:text="Message" />
+    </LinearLayout>
 </LinearLayout>

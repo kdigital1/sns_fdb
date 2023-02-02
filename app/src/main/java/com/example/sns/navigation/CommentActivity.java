@@ -38,9 +38,11 @@ public class CommentActivity extends AppCompatActivity {
     private String contentUid = null;
     private Button comment_btn_send;
     private EditText comment_edit_message;
+    private TextView commentviewitem_textview_timestamp;
     private RecyclerView comment_recyclerview;
     private CommentRecyclerviewAdapter adapter;
     private LinearLayoutManager layoutManager;
+
     ArrayList<Comment> comments = new ArrayList<>();
 
     private String destinationUid;
@@ -59,6 +61,7 @@ public class CommentActivity extends AppCompatActivity {
         comment_recyclerview = findViewById(R.id.comment_recyclerview);
         comment_btn_send = findViewById(R.id.comment_btn_send);
         comment_edit_message = findViewById(R.id.comment_edit_message);
+
         comment_btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,6 +79,7 @@ public class CommentActivity extends AppCompatActivity {
                         .collection("comments").document().set(comment);
 
                 comment_edit_message.setText("");
+
             }
         });
 
@@ -115,6 +119,7 @@ public class CommentActivity extends AppCompatActivity {
                             comments.clear();
                             for(QueryDocumentSnapshot doc : value){
                                 comments.add(doc.toObject(Comment.class));
+
                             }
                             notifyDataSetChanged();
                         }
@@ -135,7 +140,7 @@ public class CommentActivity extends AppCompatActivity {
             View view = holder.itemView;
             holder.commentviewitem_textview_comment.setText(comments.get(position).getComment());
             holder.commentviewitem_textview_profile.setText(comments.get(position).getUserId());
-
+            holder.commentviewitem_timestamp.setText(comments.get(position).getTimestamp());
             FirebaseFirestore.getInstance().collection("profileImage").document(comments.get(position).getUid())
                     .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                         @Override
@@ -175,13 +180,14 @@ public class CommentActivity extends AppCompatActivity {
             ImageView commentviewitem_imageview_profile;
             TextView commentviewitem_textview_profile;
             TextView commentviewitem_textview_comment;
-
+            TextView commentviewitem_timestamp;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 this.commentviewitem_imageview_profile = itemView.findViewById(R.id.commentviewitem_imageview_profile);
                 this.commentviewitem_textview_profile = itemView.findViewById(R.id.commentviewitem_textview_profile);
                 this.commentviewitem_textview_comment = itemView.findViewById(R.id.commentviewitem_textview_comment);
+                this.commentviewitem_timestamp = itemView.findViewById(R.id.commentviewitem_timestamp);
             }
         }
     }

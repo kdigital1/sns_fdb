@@ -122,6 +122,8 @@ public class Frag5 extends Fragment {
         getFollowerAndFollowing();
         if(uid.equals(currentUserUid)){
             //나의 페이지
+            uid = getArguments().getString("destinationUid");
+
             account_btn_follow_signout.setText("SINGOUT");
             account_btn_follow_signout.setOnClickListener(new View.OnClickListener() {
                 @Override
