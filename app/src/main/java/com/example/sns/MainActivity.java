@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity{
                 ft.commit();
                 break;
             case 2:
-                ft.replace(R.id.main_content,frag3);
+                ft.replace(R.id.main_content,frag1);
                 ft.commit();
                 break;
             case 3:
