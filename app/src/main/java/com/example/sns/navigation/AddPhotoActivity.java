@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sns.Login;
+import com.example.sns.MainActivity;
 import com.example.sns.R;
 import com.example.sns.navigation.model.ContentDTO;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -146,6 +148,8 @@ public class AddPhotoActivity extends AppCompatActivity {
                             public void onSuccess(Void unused) {
                                 Toast.makeText(AddPhotoActivity.this, "업로드 완료", Toast.LENGTH_SHORT).show();
                                 setResult(Activity.RESULT_OK);
+                                Intent intent = new Intent(AddPhotoActivity.this, MainActivity.class);
+                                startActivity(intent);
                                 finish();
 
                             }

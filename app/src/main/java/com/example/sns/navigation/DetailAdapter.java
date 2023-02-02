@@ -281,54 +281,5 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO);
 
         String message = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
-
     }
-
-    /*
-    참고용 이지만 완벽한 것은 아니다.
-    public void favoriteEvent(int position) {
-        DocumentReference tsDoc = firestore.collection("images").document(contentUidList.get(position));
-        firestore.runTransaction(new Transaction.Function<Void>() {
-            @Override
-            public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
-
-                ContentDTO contentDTO = transaction.get(tsDoc).toObject(ContentDTO.class);
-
-                if (contentDTO.getFavorites().containsKey(uid)) {
-                    contentDTO.setFavoriteCount(contentDTO.getFavoriteCount() - 1);
-                    contentDTO.getFavorites().remove(uid);
-
-                    firestore.collection("images").whereEqualTo("favorites", favori)
-                            .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                    if (value != null) {
-                                        if (check == 1) {
-                                            Toast.makeText(context.getApplicationContext(), "1", Toast.LENGTH_SHORT).show();
-                                        } else if (check == 0) {
-                                            Toast.makeText(context.getApplicationContext(), "0", Toast.LENGTH_SHORT).show();
-                                            detailviewitem_favrite_imageview.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-
-
-                                        }
-                                        return;
-                                    }
-                                    for (DocumentSnapshot doc : value) {
-                                    }
-                                    notifyDataSetChanged();
-                                }
-                            });
-                } else {
-                    contentDTO.setFavoriteCount(contentDTO.getFavoriteCount() + 1);
-                    contentDTO.getFavorites().put(uid, true);
-                }
-                transaction.set(tsDoc, contentDTO);
-                return null;
-            }
-        });
-    }
-    */
-
-
 }

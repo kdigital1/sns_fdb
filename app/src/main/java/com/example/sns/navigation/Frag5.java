@@ -106,6 +106,20 @@ public class Frag5 extends Fragment {
         Log.e("TAG", "onCreateView: currentUserUid = "+ currentUserUid);
         //문자를 비교할 때는 == 을 사용하면 안된다.
         //문자가 서로 같은지 확인 하려면 equals()를 사용해야 한다.
+
+
+        account_recyclerview = fragmentView.findViewById(R.id.account_recyclerview);
+        account_recyclerview.setHasFixedSize(true);
+        //3분할로 화면을 나타냄
+        gridLayoutManager = new GridLayoutManager(getContext(),3);
+        account_recyclerview.setLayoutManager(gridLayoutManager);
+        adapter = new UserFragmentRecyclerviewAdapter(contentDTOs);
+        account_recyclerview.setAdapter(adapter);
+        account_tv_post_count = fragmentView.findViewById(R.id.account_tv_post_count);
+
+
+        getProfileImage();
+        getFollowerAndFollowing();
         if(uid.equals(currentUserUid)){
             //나의 페이지
             account_btn_follow_signout.setText("SINGOUT");
@@ -139,20 +153,8 @@ public class Frag5 extends Fragment {
             }
         }
 
-
-        account_recyclerview = fragmentView.findViewById(R.id.account_recyclerview);
-        account_recyclerview.setHasFixedSize(true);
-        //3분할로 화면을 나타냄
-        gridLayoutManager = new GridLayoutManager(getContext(),3);
-        account_recyclerview.setLayoutManager(gridLayoutManager);
-        adapter = new UserFragmentRecyclerviewAdapter(contentDTOs);
-        account_recyclerview.setAdapter(adapter);
-        account_tv_post_count = fragmentView.findViewById(R.id.account_tv_post_count);
-
-
-        getProfileImage();
-        getFollowerAndFollowing();
         return fragmentView;
+
     }
     private void getFollowerAndFollowing(){
         firestore.collection("users").document(uid)

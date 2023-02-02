@@ -15,9 +15,6 @@ import com.example.sns.R;
 public class Frag3 extends Fragment {
     private View view;
 
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
