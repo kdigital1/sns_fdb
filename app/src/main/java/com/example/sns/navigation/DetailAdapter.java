@@ -165,8 +165,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
             }
         });
 
-        //좋아요 이벤트를 트렌잭션을 이용한 것으로 변경하면 좋을듯 하다.
-        //팔로우 트렌잭션을 참고하자
         holder.detailviewitem_favrite_imageview.setTag(position);
         holder.detailviewitem_favrite_imageview.setOnClickListener(new View.OnClickListener() {
             @Override

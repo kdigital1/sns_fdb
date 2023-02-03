@@ -61,8 +61,6 @@ public class AddPhotoActivity extends AppCompatActivity {
         addphoto_btn = findViewById(R.id.addphoto_btn);
         addphoto_img = findViewById(R.id.addphoto_img);
 
-
-        //AddPhotoActivity가 실행되면 앨범이 intent된다.
         Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, PICK_IMAGE_FROM_ALBUM);
 
@@ -99,7 +97,6 @@ public class AddPhotoActivity extends AppCompatActivity {
         String time = timestamp.format(date);
         imageFileName = "IMAGE_"+time+"_.png";
 
-        //파이어베이스 스토리지를 사용하겠다.
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         StorageReference pathReference = storageReference.child("images").child(imageFileName);

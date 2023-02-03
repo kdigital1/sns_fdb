@@ -59,14 +59,13 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.sns_login);
 
         edtEmail = findViewById(R.id.edtEmail);
         edtPassword = findViewById(R.id.edtPassword);
         textJoin = findViewById(R.id.textJoin);
         btnLogin = findViewById(R.id.btnLogin);
         btnGoogleLogin = findViewById(R.id.btnGoogleLogin);
-        btnFaceLogin = findViewById(R.id.btnFaceLogin);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -110,39 +109,14 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                         });
             }
         });
-        btnFaceLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                facebookLogin();
-            }
-        });
         btnGoogleLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 signIn();
             }
         });
-        //printHashKey();
-
-
     }
-/*
-    public void printHashKey() {
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                String hashKey = new String(Base64.encode(md.digest(), 0));
-                Log.e("TAG", "printHashKey() Hash Key: " + hashKey);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            Log.e("TAG", "printHashKey()", e);
-        } catch (Exception e) {
-            Log.e("TAG", "printHashKey()", e);
-        }
-    }
-*/
+
     private void facebookLogin() {
         loginManager.getInstance()
                 .logInWithReadPermissions(this, Arrays.asList("email","public_profile"));

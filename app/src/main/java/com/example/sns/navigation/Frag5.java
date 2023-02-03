@@ -61,7 +61,6 @@ public class Frag5 extends Fragment {
 
     private RecyclerView account_recyclerview;
     private UserFragmentRecyclerviewAdapter adapter;
-    private LinearLayoutManager layoutManager;
 
     private GridLayoutManager gridLayoutManager;
 
@@ -73,17 +72,6 @@ public class Frag5 extends Fragment {
     MainActivity mainActivity;
 
     FirebaseStorage storage = FirebaseStorage.getInstance("gs://sns-fbs2.appspot.com/");
-
-
-
-
-    //Frag5에서 MainActivity에 있는 함수 사용하기
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        mainActivity = (MainActivity)getContext();
-//        mainActivity.hello();
-//    }
 
     @Nullable
     @Override
@@ -122,9 +110,7 @@ public class Frag5 extends Fragment {
         getFollowerAndFollowing();
         if(uid.equals(currentUserUid)){
             //나의 페이지
-            uid = getArguments().getString("destinationUid");
-
-            account_btn_follow_signout.setText("SINGOUT");
+            account_btn_follow_signout.setText("로그아웃");
             account_btn_follow_signout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -136,7 +122,7 @@ public class Frag5 extends Fragment {
             });
         }else {
             //상대방에 페이지
-            account_btn_follow_signout.setText("FOLLOW");
+            account_btn_follow_signout.setText("팔로우");
 
             mainActivity = (MainActivity) getContext();
             if (mainActivity != null) {
@@ -170,7 +156,7 @@ public class Frag5 extends Fragment {
                         if(followDTO == null){
                             account_tv_following_count.setText("0");
                             account_tv_follower_count.setText("0");
-                            account_btn_follow_signout.setText("follow");
+                            account_btn_follow_signout.setText("로그아웃");
                             return;
                         }
                         if(followDTO.getFollowingCount() == 0){
@@ -184,10 +170,10 @@ public class Frag5 extends Fragment {
                         }else{
                             account_tv_follower_count.setText(String.valueOf(followDTO.getFollowerCount()));
                             if(followDTO.getFollowers().containsKey(currentUserUid)){
-                                account_btn_follow_signout.setText("follow_cancel");
+                                account_btn_follow_signout.setText("언팔로우");
                             }else{
                                 if(uid != currentUserUid){
-                                    account_btn_follow_signout.setText("follow");
+                                    account_btn_follow_signout.setText("팔로우");
                                 }
                             }
                         }
@@ -410,8 +396,6 @@ public class Frag5 extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
             account_tv_post_count.setText(str);
-
-
 
             Glide.with(holder.itemView)
                     .load(contentDTOs.get(position).getImageUri())

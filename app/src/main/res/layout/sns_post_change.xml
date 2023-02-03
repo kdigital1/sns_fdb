@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="이미지"
+        android:layout_margin="10dp"></Button>
+    <ImageView
+
+
+        android:id="@+id/postImage"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_margin="15dp"></ImageView>
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="내용"
+        android:textSize="30dp"
+        android:layout_margin="10dp"></TextView>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="254dp"
+        android:layout_margin="10dp"
+        android:background="@color/material_dynamic_neutral90" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="수정"></Button>
+</LinearLayout>
