@@ -121,6 +121,7 @@ public class Frag5 extends Fragment {
                 }
             });
         }else {
+
             //상대방에 페이지
             account_btn_follow_signout.setText("팔로우");
 
@@ -157,6 +158,8 @@ public class Frag5 extends Fragment {
                             account_tv_following_count.setText("0");
                             account_tv_follower_count.setText("0");
                             account_btn_follow_signout.setText("로그아웃");
+                            account_btn_follow_signout.setText("SINGOUT");
+
                             return;
                         }
                         if(followDTO.getFollowingCount() == 0){
