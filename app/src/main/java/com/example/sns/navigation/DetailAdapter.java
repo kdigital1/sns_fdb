@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,9 +63,6 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private static String CHANEL_NAME = "Channel1";
 
 
-
-    //1번
-    //context로 frag1에 넘겨 준다
     public DetailAdapter(Context context,ArrayList<ContentDTO> contentDTOs) {
         this.context = context;
         this.contentDTOs = contentDTOs;
@@ -278,5 +276,14 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO);
 
         String message = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    }
+    private void getEmail(){
+        firestore.collection("Images").document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot value) {
+                    String str = String.valueOf(value.getData().get("email"));
+
+            }
+        });
     }
 }

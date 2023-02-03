@@ -129,6 +129,7 @@ public class AddPhotoActivity extends AppCompatActivity {
                         dto.setExplain(addphoto_edit.getText().toString());
                         dto.setUid(currentUser.getUid());
                         dto.setUserId(currentUser.getEmail());
+
                         Long now =  System.currentTimeMillis();
                         Date mDate = new Date(now);
                         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

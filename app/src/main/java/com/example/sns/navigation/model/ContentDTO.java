@@ -10,36 +10,12 @@ public class ContentDTO {
     private String userId;
     private String timestamp;
     private int favoriteCount;
+    private String username;
     private Map<String,Boolean> favorites  = new HashMap<>();
 
     public ContentDTO(){
 
     }
-
-
-//    public ContentDTO(String explain, String imageUri, String uid,
-//                      String userId, String timestamp, int favoriteCount,
-//                      HashMap<String, Boolean> user) {
-//        this.explain = explain;
-//        this.imageUri = imageUri;
-//        this.uid = uid;
-//        this.userId = userId;
-//        this.timestamp = timestamp;
-//        this.favoriteCount = favoriteCount;
-//        this.user = user;
-//    }
-
-//    public ContentDTO(String explain, String imageUri, String uid,
-//                      String userId, String timestamp, int favoriteCount,
-//                      HashMap<String, Boolean> user) {
-//        this.explain = explain;
-//        this.imageUri = imageUri;
-//        this.uid = uid;
-//        this.userId = userId;
-//        this.timestamp = timestamp;
-//        this.favoriteCount = favoriteCount;
-//        this.user = user;
-//    }
 
 
     public String getExplain() {

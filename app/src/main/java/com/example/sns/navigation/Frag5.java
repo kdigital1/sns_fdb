@@ -294,27 +294,16 @@ public class Frag5 extends Fragment {
 
     //이미지 다운로드
     private void getProfileImage(){
-        firestore.collection("profileImage").document(uid)
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        firestore.collection("profileImage").document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                        try{
-                            if(value.getData()==null){
-                                Toast.makeText(getActivity(), "프로필 이미지가 없거나 오류가 발생", Toast.LENGTH_SHORT).show();
-
-                                return;
-                            }
-                        }catch (Exception e){
-
+                    public void onSuccess(DocumentSnapshot value) {
+                        if(value.getData()==null){
+                            Toast.makeText(getActivity(), "프로필 이미지가 없거나 오류가 발생", Toast.LENGTH_SHORT).show();
+                            return;
                         }
-
                         if(value !=null ){
-                            String str = String.valueOf(value.getData());
-                            str=str.substring(10,str.length()-1);
+                            String str = String.valueOf(value.getData().get("profileUri"));
                             Uri uri = Uri.parse(str);
-                            Log.e("TAG", "onEvent: "+str);
-                            Log.e("TAG", "onEvent: "+value.getData());
-                            // Map<String, Object> str = value.getData();
                             Glide.with(getActivity())
                                     .load(uri)
                                     .apply(RequestOptions.circleCropTransform())
@@ -323,7 +312,6 @@ public class Frag5 extends Fragment {
                         }
                     }
                 });
-
     }
     public class UserFragmentRecyclerviewAdapter extends RecyclerView.Adapter<UserFragmentRecyclerviewAdapter.ViewHolder>{
         public UserFragmentRecyclerviewAdapter(ArrayList<ContentDTO> contentDTOs){

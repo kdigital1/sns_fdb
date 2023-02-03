@@ -136,34 +136,29 @@ public class SignUp extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Uri> task) {
                                 if (task.isSuccessful()) {
-                                    User userModel = new User();
-                                    userModel.setUsername(edtSignName.getText().toString());
-                                    userModel.setEmail(edtSignEmail.getText().toString());
-                                    userModel.setUid(uid);
+
                                     StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("userProfileImages").child(uid);
 
                                     storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
+                                            User userModel = new User();
+                                            userModel.setUsername(edtSignName.getText().toString());
+                                            userModel.setEmail(edtSignEmail.getText().toString());
+                                            userModel.setUid(uid);
                                             String img_uri = uri.toString();
-                                            ProfileImage profileimage = new ProfileImage();
-                                            profileimage.setImageUri(img_uri);
+                                            userModel.setProfileUri(img_uri);
                                             db.collection("profileImage").document(uid)
-                                                    .set(profileimage).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    .set(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void unused) {
+                                                            Toast.makeText(SignUp.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(getApplication(), Login.class);
+                                                            startActivity(intent);
                                                         }
                                                     });
                                         }
                                     });
-                                    db.collection("profileImage").document(uid).set(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void unused) {
-                                            Toast.makeText(SignUp.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                                            Intent intent = new Intent(getApplication(), Login.class);
-                                            startActivity(intent);
-                                        }
-                                            });
                                 } else {
                                     Toast.makeText(SignUp.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
                                 }
