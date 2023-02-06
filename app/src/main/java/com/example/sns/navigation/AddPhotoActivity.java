@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,10 +19,13 @@ import com.example.sns.Login;
 import com.example.sns.MainActivity;
 import com.example.sns.R;
 import com.example.sns.navigation.model.ContentDTO;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -30,12 +34,14 @@ import com.google.firebase.storage.UploadTask;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 public class AddPhotoActivity extends AppCompatActivity {
     public static final int PICK_IMAGE_FROM_ALBUM = 1;
     private FirebaseStorage storage;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseFirestore firestore;
+    private String uid;
 
     private Uri photoUri;
     private EditText addphoto_edit;
@@ -45,10 +51,9 @@ public class AddPhotoActivity extends AppCompatActivity {
     private String imageFileName ;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_photo);
 
@@ -123,13 +128,21 @@ public class AddPhotoActivity extends AppCompatActivity {
                 pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
+                        uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        firestore.collection("profileImage").document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot value) {
+                                String str = String.valueOf(value.getData().get("username"));
+                                ContentDTO dto = new ContentDTO();
+                                dto.setUsername(str);
+                            }
+                        });
                         String img_uri = uri.toString();
                         FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
                         ContentDTO dto = new ContentDTO();
                         dto.setExplain(addphoto_edit.getText().toString());
                         dto.setUid(currentUser.getUid());
                         dto.setUserId(currentUser.getEmail());
-
                         Long now =  System.currentTimeMillis();
                         Date mDate = new Date(now);
                         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
