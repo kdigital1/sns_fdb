@@ -7,6 +7,7 @@ public class ContentDTO {
     private String explain;
     private String imageUri;
     private String uid;
+    private String email;
     private String userId;
     private String timestamp;
     private int favoriteCount;
@@ -45,10 +46,15 @@ public class ContentDTO {
         return uid;
     }
 
+    public String getEmail() {
+        return email;
+    }
     public void setUid(String uid) {
         this.uid = uid;
     }
-
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public String getUserId() {
         return userId;
     }

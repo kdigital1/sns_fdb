@@ -149,6 +149,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 Frag5 fragment = new Frag5();
                 Bundle bundle = new Bundle();
                 bundle.putString("destinationUid",contentDTOs.get(position).getUid());
+                bundle.putString("destinationEmail",contentDTOs.get(position).getEmail());
                 bundle.putString("userId",contentDTOs.get(position).getUserId());
                 fragment.setArguments(bundle);
 
@@ -236,6 +237,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                 Intent intent = new Intent(view.getContext(), CommentActivity.class);
                 intent.putExtra("contentUid", contentUidList.get(position));
                 intent.putExtra("destinationUid",contentDTOs.get(position).getUid());
+                intent.putExtra("destinationEmail",contentDTOs.get(position).getEmail());
                 context.startActivity(intent);
             }
         });

@@ -60,6 +60,7 @@ public class Frag5 extends Fragment {
 
 
     private RecyclerView account_recyclerview;
+    private RecyclerView followerList;
     private UserFragmentRecyclerviewAdapter adapter;
 
     private GridLayoutManager gridLayoutManager;
@@ -82,6 +83,8 @@ public class Frag5 extends Fragment {
 
         account_btn_follow_signout = fragmentView.findViewById(R.id.account_btn_follow_signout);
         account_iv_profile = fragmentView.findViewById(R.id.account_iv_profile);
+        followerList = fragmentView.findViewById(R.id.tvage);
+        followerList = fragmentView.findViewById(R.id.name);
         account_tv_following_count = fragmentView.findViewById(R.id.account_tv_following_count);
         account_tv_follower_count = fragmentView.findViewById(R.id.account_tv_follower_count);
 
@@ -90,6 +93,7 @@ public class Frag5 extends Fragment {
         uid = getArguments().getString("destinationUid");
         //현재 로그인 되어 있는 아이디
         currentUserUid = mFirebaseAuth.getInstance().getCurrentUser().getUid();
+
         Log.e("TAG", "onCreateView: uid = "+ uid);
         Log.e("TAG", "onCreateView: currentUserUid = "+ currentUserUid);
         //문자를 비교할 때는 == 을 사용하면 안된다.
@@ -108,9 +112,29 @@ public class Frag5 extends Fragment {
 
         getProfileImage();
         getFollowerAndFollowing();
+
         if(uid.equals(currentUserUid)){
             //나의 페이지
             account_btn_follow_signout.setText("로그아웃");
+            account_iv_profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent photoPickIntent = new Intent(Intent.ACTION_PICK);
+                    photoPickIntent.setType("image/*");
+                    getActivity().startActivityForResult(photoPickIntent, PICK_PROFILE_FROM_ALBUM);
+
+                }
+            });
+
+            account_tv_follower_count.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent followerList = new Intent(Intent.ACTION_PICK);
+
+                    getActivity().startActivityForResult(followerList, PICK_PROFILE_FROM_ALBUM);
+
+                }
+            });
             account_btn_follow_signout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -145,6 +169,7 @@ public class Frag5 extends Fragment {
         return fragmentView;
 
     }
+
     private void getFollowerAndFollowing(){
         firestore.collection("users").document(uid)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -158,7 +183,7 @@ public class Frag5 extends Fragment {
                             account_tv_following_count.setText("0");
                             account_tv_follower_count.setText("0");
                             account_btn_follow_signout.setText("로그아웃");
-                            account_btn_follow_signout.setText("SINGOUT");
+
 
                             return;
                         }
@@ -175,9 +200,9 @@ public class Frag5 extends Fragment {
                             if(followDTO.getFollowers().containsKey(currentUserUid)){
                                 account_btn_follow_signout.setText("언팔로우");
                             }else{
-                                if(uid != currentUserUid){
+
                                     account_btn_follow_signout.setText("팔로우");
-                                }
+
                             }
                         }
                     }
