@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class SignUp extends AppCompatActivity {
     private Uri imageUri;
     public static int PICK_PROFILE_FROM_ALBUM=10;
     private FirebaseFirestore firestore;
+    private FrameLayout signupframe;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -61,10 +63,11 @@ public class SignUp extends AppCompatActivity {
         btnSignup = findViewById(R.id.btnSignup);
         edtSignName=findViewById(R.id.edtSignName);
         account_iv_profile = findViewById(R.id.account_iv_profile);
+        signupframe=findViewById(R.id.signupframe);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        account_iv_profile.setOnClickListener(new View.OnClickListener() {
+        signupframe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent photoPickIntent = new Intent(Intent.ACTION_PICK);
@@ -80,7 +83,7 @@ public class SignUp extends AppCompatActivity {
                 String strPwd = edtSignPwd.getText().toString();
                 int strLength = strPwd.length();
 
-                if(account_iv_profile==null){
+                if(account_iv_profile.getDrawable()==null){
                     Toast.makeText(SignUp.this,"프로필사진을 등록하세요",Toast.LENGTH_SHORT).show();
                     return;
                 }
