@@ -32,11 +32,13 @@ import com.example.sns.navigation.Frag2;
 import com.example.sns.navigation.Frag3;
 import com.example.sns.navigation.Frag4;
 import com.example.sns.navigation.Frag5;
+import com.example.sns.navigation.model.ContentDTO;
 import com.example.sns.navigation.model.ProfileImage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
@@ -271,24 +273,33 @@ public class MainActivity extends AppCompatActivity{
                     storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
-                            String img_uri = uri.toString();
-                            ProfileImage profileimage = new ProfileImage();
-                            profileimage.setImageUri(img_uri);
-                            Toast.makeText(getApplication(),"성공",Toast.LENGTH_SHORT).show();
-                            firestore.collection("profileImage").document(uid)
-                                    .set(profileimage).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            firestore.collection("profileImage").document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                 @Override
-                                public void onSuccess(Void unused) {
-                                    setResult(Activity.RESULT_OK);
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(MainActivity.this,"다시 시도해주세요",Toast.LENGTH_SHORT).show();
+                                public void onSuccess(DocumentSnapshot value) {
+                                    String img_uri = uri.toString();
+                                    User usermodel = new User();
+                                    usermodel.setProfileUri(img_uri);
+                                    String name = String.valueOf(value.getData().get("username"));
+                                    String email = String.valueOf(value.getData().get("email"));
+                                    usermodel.setUsername(name);
+                                    usermodel.setEmail(email);
+                                    usermodel.setUid(uid);
+                                    Toast.makeText(getApplication(),"성공",Toast.LENGTH_SHORT).show();
+                                    firestore.collection("profileImage").document(uid)
+                                            .set(usermodel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    setResult(Activity.RESULT_OK);
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(MainActivity.this,"다시 시도해주세요",Toast.LENGTH_SHORT).show();
 
+                                                }
+                                            });
                                 }
                             });
-
                         }
                     });
                 }

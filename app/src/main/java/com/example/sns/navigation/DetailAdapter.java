@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.sns.R;
+import com.example.sns.User;
 import com.example.sns.navigation.model.ContentDTO;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,6 +50,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
 
     ArrayList<ContentDTO> contentDTOs;
+    ArrayList<User> user;
     public ArrayList<String> contentUidList = new ArrayList<>();
 
     String uid;
@@ -114,26 +116,16 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
         holder.detailviewitem_explain_textview.setText(contentDTOs.get(position).getExplain());
         holder.detailviewitem_favoritecounter_textview.setText("Likes "+contentDTOs.get(position).getFavoriteCount());
 
-        FirebaseFirestore.getInstance().collection("profileImage").document(contentDTOs.get(position).getUid())
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        FirebaseFirestore.getInstance().collection("profileImage").document(contentDTOs.get(position).getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                        try{
-                            if(value.getData()==null){
-                                return;
-                            }
-                        }catch (Exception e){
-                        }
-                        if(value !=null ){
-                            String str = String.valueOf(value.getData());
-                            str=str.substring(10,str.length()-1);
-                            Uri uri = Uri.parse(str);
-                            Glide.with(holder.itemView)
-                                    .load(uri)
-                                    .apply(RequestOptions.circleCropTransform())
-                                    .into(holder.detailviewitem_profile_image);
-
-                        }
+                    public void onSuccess(DocumentSnapshot value) {
+                        String str = String.valueOf(value.getData().get("profileUri"));
+                        //str=str.substring(10,str.length()-1);
+                        Uri uri = Uri.parse(str);
+                        Glide.with(holder.itemView)
+                                .load(uri)
+                                .apply(RequestOptions.circleCropTransform())
+                                .into(holder.detailviewitem_profile_image);
                     }
                 });
 

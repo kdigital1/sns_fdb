@@ -113,7 +113,7 @@ public class Frag5 extends Fragment {
         getProfileImage();
         getFollowerAndFollowing();
 
-        if(uid.equals(currentUserUid)){
+        if(uid==currentUserUid){
             //나의 페이지
             account_btn_follow_signout.setText("로그아웃");
             account_iv_profile.setOnClickListener(new View.OnClickListener() {
@@ -130,9 +130,7 @@ public class Frag5 extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Intent followerList = new Intent(Intent.ACTION_PICK);
-
                     getActivity().startActivityForResult(followerList, PICK_PROFILE_FROM_ALBUM);
-
                 }
             });
             account_btn_follow_signout.setOnClickListener(new View.OnClickListener() {
