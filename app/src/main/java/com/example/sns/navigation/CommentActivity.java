@@ -160,6 +160,7 @@ public class CommentActivity extends AppCompatActivity {
                                     .load(uri)
                                     .apply(RequestOptions.circleCropTransform())
                                     .into(holder.commentviewitem_imageview_profile);
+
                         }
                     });
         }
