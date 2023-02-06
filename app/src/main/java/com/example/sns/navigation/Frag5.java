@@ -151,10 +151,6 @@ public class Frag5 extends Fragment {
             if (mainActivity != null) {
                 String userId = getArguments().getString("userId");
 
-                mainActivity.hello();
-                mainActivity.toolbar_username.setText(userId);
-                mainActivity.toolbar_username.setVisibility(View.VISIBLE);
-                mainActivity.toolbar_btn_back.setVisibility(View.VISIBLE);
                 account_btn_follow_signout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -452,7 +448,6 @@ public class Frag5 extends Fragment {
                 super(itemView);
                 this.account_tv_post_count = itemView.findViewById(R.id.account_tv_post_count);
                 this.profile_image = itemView.findViewById(R.id.profile_image);
-                this.toolbar_username = itemView.findViewById(R.id.toolbar_username);
                 this.account_iv_profile = itemView.findViewById(R.id.account_iv_profile);
                 this.account_tv_following_count =itemView.findViewById(R.id.account_tv_following_count);
             }

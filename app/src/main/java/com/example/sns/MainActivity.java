@@ -93,8 +93,6 @@ public class MainActivity extends AppCompatActivity{
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
-        toolbar_username = findViewById(R.id.toolbar_username);
-        toolbar_btn_back = findViewById(R.id.toolbar_btn_back);
 
 
 
@@ -210,29 +208,10 @@ public class MainActivity extends AppCompatActivity{
                 ft.commit();
                 break;
             case 4:
-                toolbar_username.setVisibility(View.GONE);
-                toolbar_btn_back.setVisibility(View.GONE);
-
                 ft.replace(R.id.main_content,frag5);
                 ft.commit();
                 break;
         }
-    }
-    private void setToolbarDefault() {
-        toolbar_username.setVisibility(View.GONE);
-        toolbar_btn_back.setVisibility(View.GONE);
-
-    }
-    public void hello(){
-        toolbar_btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toolbar_username.setVisibility(View.GONE);
-                toolbar_btn_back.setVisibility(View.GONE);
-                toolbar_title_image.setVisibility(View.VISIBLE);
-                bottomNavigationView.setSelectedItemId(R.id.action_home);
-            }
-        });
     }
     public void registerPushToken(){
         FirebaseMessaging.getInstance().getToken()
