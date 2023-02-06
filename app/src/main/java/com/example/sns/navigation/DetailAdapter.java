@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -54,7 +55,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public ArrayList<String> contentUidList = new ArrayList<>();
 
     String uid;
-
+String username;
 
     Map<String,Boolean> favori  = new HashMap<>();
 
@@ -109,7 +110,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     //이곳에서 변경되는 부분을 작성하면 다음 프래그1이 실행 될때 추가된다.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.detailviewitem_profile_textview.setText(contentDTOs.get(position).getUserId());
+        holder.detailviewitem_profile_textview.setTextColor(Color.parseColor("#000000"));
+
+        holder.detailviewitem_profile_textview.setText(contentDTOs.get(position).getUsername());
         Glide.with(holder.itemView)
                 .load(contentDTOs.get(position).getImageUri())
                 .into(holder.detailviewitem_profile_imageview_content);

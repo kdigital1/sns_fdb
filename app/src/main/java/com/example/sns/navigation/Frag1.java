@@ -30,7 +30,7 @@ public class Frag1 extends Fragment {
     ArrayList<ContentDTO> contentDTOs = new ArrayList<>();
     ArrayList<String> contentUidList = new ArrayList<>();
     String uid;
-
+String username;
     private ImageView detailviewitem_favrite_imageview;
 
 
@@ -44,7 +44,7 @@ public class Frag1 extends Fragment {
 
         firestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
+        username = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //리싸이클러뷰를 정의한다.↓
         detailviewfragment_recyclerview = view.findViewById(R.id.detailviewfragment_recyclerview);

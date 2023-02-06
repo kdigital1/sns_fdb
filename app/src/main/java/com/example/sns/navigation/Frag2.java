@@ -68,6 +68,7 @@ public class Frag2 extends Fragment {
         private Activity activity;
         private ImageView detailviewitem_favrite_imageview;
         String uid;
+        String username;
         Map<String,Boolean> favori  = new HashMap<>();
 
 
@@ -78,6 +79,7 @@ public class Frag2 extends Fragment {
 //            this.contentDTOs = contentDTOs;
             firestore = FirebaseFirestore.getInstance();
             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            username = FirebaseAuth.getInstance().getCurrentUser().getUid();
             firestore.collection("images").orderBy("timestamp").get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
