@@ -132,45 +132,44 @@ public class AddPhotoActivity extends AppCompatActivity {
                         firestore.collection("profileImage").document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot value) {
-                                String str = String.valueOf(value.getData().get("username"));
+                                String img_uri = uri.toString();
+                                FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
                                 ContentDTO dto = new ContentDTO();
+                                dto.setExplain(addphoto_edit.getText().toString());
+                                dto.setUid(currentUser.getUid());
+                                dto.setUserId(currentUser.getEmail());
+                                dto.setEmail(currentUser.getEmail());
+                                Long now =  System.currentTimeMillis();
+                                Date mDate = new Date(now);
+                                SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                                String getTime = simpleDate.format(mDate);
+                                dto.setTimestamp(getTime);
+                                dto.setImageUri(img_uri);
+                                String str = String.valueOf(value.getData().get("username"));
                                 dto.setUsername(str);
+
+                                //이미지 uri를 가져왔으면 사용자 정보를 dto에 담고 업로드 하는 곳↓
+                                firestore.collection("images").document()
+                                        .set(dto).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(AddPhotoActivity.this, "업로드 완료", Toast.LENGTH_SHORT).show();
+                                                setResult(Activity.RESULT_OK);
+                                                Intent intent = new Intent(AddPhotoActivity.this, MainActivity.class);
+                                                startActivity(intent);
+                                                finish();
+
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(AddPhotoActivity.this,"다시 시도해주세요",Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
                             }
                         });
-                        String img_uri = uri.toString();
-                        FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
-                        ContentDTO dto = new ContentDTO();
-                        dto.setExplain(addphoto_edit.getText().toString());
-                        dto.setUid(currentUser.getUid());
-                        dto.setUserId(currentUser.getEmail());
-                        dto.setEmail(currentUser.getEmail());
-                        Long now =  System.currentTimeMillis();
-                        Date mDate = new Date(now);
-                        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                        String getTime = simpleDate.format(mDate);
-                        dto.setTimestamp(getTime);
-                        dto.setImageUri(img_uri);
 
-
-
-                        //이미지 uri를 가져왔으면 사용자 정보를 dto에 담고 업로드 하는 곳↓
-                        firestore.collection("images").document()
-                                .set(dto).addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Toast.makeText(AddPhotoActivity.this, "업로드 완료", Toast.LENGTH_SHORT).show();
-                                setResult(Activity.RESULT_OK);
-                                Intent intent = new Intent(AddPhotoActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
-
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(AddPhotoActivity.this,"다시 시도해주세요",Toast.LENGTH_SHORT).show();
-                            }
-                        });
                     }
                 });
             }

@@ -282,6 +282,7 @@ public class MainActivity extends AppCompatActivity{
                                     String name = String.valueOf(value.getData().get("username"));
                                     String email = String.valueOf(value.getData().get("email"));
                                     usermodel.setUsername(name);
+
                                     usermodel.setEmail(email);
                                     usermodel.setUid(uid);
                                     Toast.makeText(getApplication(),"성공",Toast.LENGTH_SHORT).show();
