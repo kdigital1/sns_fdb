@@ -1,5 +1,6 @@
 package com.example.sns.navigation;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,7 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.sns.MainActivity;
 import com.example.sns.R;
+import com.example.sns.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -141,33 +147,19 @@ public class CommentActivity extends AppCompatActivity {
             holder.commentviewitem_textview_comment.setText(comments.get(position).getComment());
             holder.commentviewitem_textview_profile.setText(comments.get(position).getUserId());
             holder.commentviewitem_timestamp.setText(comments.get(position).getTimestamp());
-            FirebaseFirestore.getInstance().collection("profileImage").document(comments.get(position).getUid())
-                    .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            FirebaseFirestore.getInstance().collection("profileImage").document(comments.get(position).getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
-                        public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                            try{
-                                if(value.getData()==null){
-
-                                    return;
-                                }
-                            }catch (Exception e){
-
-                            }
-
-                            if(value !=null ){
-                                String str = String.valueOf(value.getData());
-                                str=str.substring(10,str.length()-1);
-                                Uri uri = Uri.parse(str);
-                                //    Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
-                                Log.e("TAG", "onEvent: "+str);
-                                Log.e("TAG", "onEvent: "+value.getData());
-                                // Map<String, Object> str = value.getData();
-                                Glide.with(holder.itemView)
-                                        .load(uri)
-                                        .apply(RequestOptions.circleCropTransform())
-                                        .into(holder.commentviewitem_imageview_profile);
-
-                            }
+                        public void onSuccess(DocumentSnapshot value) {
+                            String str = String.valueOf(value.getData().get("profileUri"));
+                            Uri uri = Uri.parse(str);
+                            //    Toast.makeText(getActivity(), str, Toast.LENGTH_SHORT).show();
+                            Log.e("TAG", "onEvent: "+str);
+                            Log.e("TAG", "onEvent: "+value.getData());
+                            // Map<String, Object> str = value.getData();
+                            Glide.with(holder.itemView)
+                                    .load(uri)
+                                    .apply(RequestOptions.circleCropTransform())
+                                    .into(holder.commentviewitem_imageview_profile);
                         }
                     });
         }
