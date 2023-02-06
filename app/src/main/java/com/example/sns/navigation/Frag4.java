@@ -106,8 +106,7 @@ public class Frag4 extends Fragment {
                             }
 
                             if(value !=null ){
-                                String str = String.valueOf(value.getData());
-                                str=str.substring(10,str.length()-1);
+                                String str = String.valueOf(value.getData().get("profileUri"));
                                 Uri uri = Uri.parse(str);
                                 Log.e("TAG", "onEvent: "+str);
                                 Log.e("TAG", "onEvent: "+value.getData());
