@@ -309,6 +309,7 @@ TextView detailviewitem_time_textview;
             this.item_delete=itemView.findViewById(R.id.item_delete);
 
 
+
         }
     }
     private void favoriteAlarm(String destinationUid){
