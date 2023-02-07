@@ -59,7 +59,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private ImageView detailviewitem_favrite_imageview;
     private FirebaseAuth mFirebaseAuth;
     private String currentUserUid;
-
+    private TextView detailviewitem_time_textview;
 
     ArrayList<ContentDTO> contentDTOs;
     ArrayList<User> user;
@@ -156,6 +156,7 @@ String username;
         holder.detailviewitem_profile_textview.setTextColor(Color.parseColor("#000000"));
 
         holder.detailviewitem_profile_textview.setText(contentDTOs.get(position).getUsername());
+        holder.detailviewitem_time_textview.setText(contentDTOs.get(position).getTimestamp());
         Glide.with(holder.itemView)
                 .load(contentDTOs.get(position).getImageUri())
                 .into(holder.detailviewitem_profile_imageview_content);
@@ -291,7 +292,7 @@ String username;
         TextView detailviewitem_explain_textview;
         ImageView detailviewitem_favrite_imageview;
         ImageView detailviewitem_comment_imageview;
-
+TextView detailviewitem_time_textview;
         TextView item_update;
         TextView item_delete;
         public ViewHolder(@NonNull View itemView) {
@@ -303,6 +304,7 @@ String username;
             this.detailviewitem_explain_textview = itemView.findViewById(R.id.detailviewitem_explain_textview);
             this.detailviewitem_favrite_imageview = itemView.findViewById(R.id.detailviewitem_favrite_imageview);
             this.detailviewitem_comment_imageview = itemView.findViewById(R.id.detailviewitem_comment_imageview);
+            this.detailviewitem_time_textview = itemView.findViewById(R.id.detailviewitem_time_textview);
             this.item_update=itemView.findViewById(R.id.item_update);
             this.item_delete=itemView.findViewById(R.id.item_delete);
 

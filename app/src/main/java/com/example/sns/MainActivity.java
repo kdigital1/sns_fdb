@@ -1,17 +1,16 @@
 package com.example.sns;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,8 +32,6 @@ import com.example.sns.navigation.Frag3;
 import com.example.sns.navigation.Frag4;
 import com.example.sns.navigation.Frag5;
 import com.example.sns.navigation.ItemActivity;
-import com.example.sns.navigation.model.ContentDTO;
-import com.example.sns.navigation.model.ProfileImage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,9 +43,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.Signature;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,13 +63,13 @@ public class MainActivity extends AppCompatActivity{
     private Frag3 frag3;
     private Frag4 frag4;
     private Frag5 frag5;
-private ItemActivity itemActivity;
+    private ItemActivity itemActivity;
     public TextView toolbar_username;
     public ImageView toolbar_btn_back;
     public ImageView toolbar_title_image;
 
     private Uri imageUri;
-
+    private ImageView detailviewitem_profile_imageview_content;
     private NotificationManager manager;
     private NotificationCompat.Builder builder;
 
@@ -85,7 +79,7 @@ private ItemActivity itemActivity;
 
 
 
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -279,7 +273,6 @@ private ItemActivity itemActivity;
         //알림창 실행
         manager.notify(1,notification);
     }
-
 
 
     @Override
