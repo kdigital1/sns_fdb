@@ -2,6 +2,8 @@ package com.example.sns.navigation;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -126,8 +128,6 @@ String username;
             holder.item_delete.setVisibility(View.INVISIBLE);
         }
 
-        Log.e("TAG", "게시글uid = "+ uid2);
-        Log.e("TAG", "게시글currentUserUid = "+ currentUserUid);
 
         holder.detailviewitem_profile_textview.setTextColor(Color.parseColor("#000000"));
 
