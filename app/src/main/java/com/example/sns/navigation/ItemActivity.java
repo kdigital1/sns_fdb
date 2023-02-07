@@ -72,7 +72,8 @@ public class ItemActivity extends AppCompatActivity {
         destinationUsername = getIntent().getStringExtra("destinationUsername");
         detailviewitem_profile_image = findViewById(R.id.detailviewitem_profile_image);
         detailviewitem_profile_textview = findViewById(R.id.detailviewitem_profile_textview);
-        detailviewitem_timestamp_textview = findViewById(R.id.detailviewitem_timestamp_textview);
+
+    //   detailviewitem_timestamp_textview = findViewById(R.id.detailviewitem_timestamp_textview)
         detailviewitem_profile_image = findViewById(R.id.detailviewitem_profile_image);
         detailviewitem_profile_imageview_content = findViewById(R.id.detailviewitem_profile_imageview_content);
         detailviewitem_favrite_imageview = findViewById(R.id.detailviewitem_favrite_imageview);

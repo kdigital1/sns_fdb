@@ -42,13 +42,15 @@ import com.example.sns.navigation.model.AlarmDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder>{
     private FirebaseFirestore firestore;
     private Context context;
     private Activity activity;
     private ImageView detailviewitem_favrite_imageview;
-
+private FirebaseAuth mFirebaseAuth;
+private String currentUserUid;
 
     ArrayList<ContentDTO> contentDTOs;
     ArrayList<User> user;
@@ -113,12 +115,22 @@ String username;
         holder.detailviewitem_profile_textview.setTextColor(Color.parseColor("#000000"));
 
         holder.detailviewitem_profile_textview.setText(contentDTOs.get(position).getUsername());
+        holder.detailviewitem_time_textview.setText(contentDTOs.get(position).getTimestamp());
         Glide.with(holder.itemView)
                 .load(contentDTOs.get(position).getImageUri())
                 .into(holder.detailviewitem_profile_imageview_content);
         holder.detailviewitem_explain_textview.setText(contentDTOs.get(position).getExplain());
         holder.detailviewitem_favoritecounter_textview.setText("Likes "+contentDTOs.get(position).getFavoriteCount());
-
+        String uid2 = contentDTOs.get(position).getUid();
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        currentUserUid = mFirebaseAuth.getInstance().getCurrentUser().getUid();
+        if(Objects.equals(uid2, currentUserUid)){
+            holder.item_update.setVisibility(View.VISIBLE);
+            holder.item_delete.setVisibility(View.VISIBLE);
+        }else {
+            holder.item_update.setVisibility(View.INVISIBLE);
+            holder.item_delete.setVisibility(View.INVISIBLE);
+        }
         FirebaseFirestore.getInstance().collection("profileImage").document(contentDTOs.get(position).getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot value) {
@@ -247,11 +259,14 @@ String username;
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView detailviewitem_profile_image;
         TextView detailviewitem_profile_textview;
+        TextView detailviewitem_time_textview;
         ImageView detailviewitem_profile_imageview_content;
         TextView detailviewitem_favoritecounter_textview;
         TextView detailviewitem_explain_textview;
         ImageView detailviewitem_favrite_imageview;
         ImageView detailviewitem_comment_imageview;
+        TextView item_update;
+        TextView item_delete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.detailviewitem_profile_image = itemView.findViewById(R.id.detailviewitem_profile_image);
@@ -261,6 +276,9 @@ String username;
             this.detailviewitem_explain_textview = itemView.findViewById(R.id.detailviewitem_explain_textview);
             this.detailviewitem_favrite_imageview = itemView.findViewById(R.id.detailviewitem_favrite_imageview);
             this.detailviewitem_comment_imageview = itemView.findViewById(R.id.detailviewitem_comment_imageview);
+            this.detailviewitem_time_textview = itemView.findViewById(R.id.detailviewitem_time_textview);
+            this.item_update = itemView.findViewById(R.id.item_update);
+            this.item_delete = itemView.findViewById(R.id.item_delete);
         }
     }
     private void favoriteAlarm(String destinationUid){
