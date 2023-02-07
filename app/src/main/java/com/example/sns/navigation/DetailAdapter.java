@@ -1,5 +1,7 @@
 package com.example.sns.navigation;
 
+
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -289,6 +291,7 @@ String username;
         TextView detailviewitem_explain_textview;
         ImageView detailviewitem_favrite_imageview;
         ImageView detailviewitem_comment_imageview;
+
         TextView item_update;
         TextView item_delete;
         public ViewHolder(@NonNull View itemView) {

@@ -32,6 +32,7 @@ import com.example.sns.navigation.Frag2;
 import com.example.sns.navigation.Frag3;
 import com.example.sns.navigation.Frag4;
 import com.example.sns.navigation.Frag5;
+import com.example.sns.navigation.ItemActivity;
 import com.example.sns.navigation.model.ContentDTO;
 import com.example.sns.navigation.model.ProfileImage;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity{
     private Frag3 frag3;
     private Frag4 frag4;
     private Frag5 frag5;
-
+private ItemActivity itemActivity;
     public TextView toolbar_username;
     public ImageView toolbar_btn_back;
     public ImageView toolbar_title_image;

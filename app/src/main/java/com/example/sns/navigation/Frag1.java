@@ -1,5 +1,8 @@
 package com.example.sns.navigation;
 
+
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sns.MainActivity;
 import com.example.sns.R;
 import com.example.sns.navigation.model.ContentDTO;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +29,7 @@ import java.util.ArrayList;
 public class Frag1 extends Fragment {
     private View view;
     private View fragmentView;
+
     private FirebaseFirestore firestore;
     //리싸이클러뷰 사용을 위한 선언↓
     private RecyclerView detailviewfragment_recyclerview;
@@ -36,7 +41,7 @@ public class Frag1 extends Fragment {
     String uid;
 String username;
     private ImageView detailviewitem_favrite_imageview;
-
+    private ImageView detailviewitem_profile_imageview_content;
 
 
 
@@ -52,6 +57,7 @@ String username;
 
         //리싸이클러뷰를 정의한다.↓
         detailviewfragment_recyclerview = view.findViewById(R.id.detailviewfragment_recyclerview);
+        detailviewitem_profile_imageview_content = view.findViewById(R.id.detailviewitem_profile_imageview_content);
         detailviewfragment_recyclerview.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,true);
         layoutManager.setStackFromEnd(true);
@@ -64,7 +70,9 @@ String username;
 
 
 
+
         return view;
+
     }
 
 
