@@ -28,7 +28,8 @@
             android:layout_toRightOf="@+id/account_iv_profile"
             android:layout_above="@+id/account_btn_follow_signout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
             <LinearLayout
                 android:layout_weight="1"
                 android:gravity="center"
@@ -50,7 +51,8 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/followerlist">
                 <TextView
                     android:text="follower"
                     android:layout_width="wrap_content"

@@ -1,15 +1,14 @@
 package com.example.sns.navigation;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,19 +21,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 //detail Fragment
-public class Frag1 extends Fragment {
+public class Frag6 extends AppCompatActivity {
     private View view;
-    private View fragmentView;
     private FirebaseFirestore firestore;
     //리싸이클러뷰 사용을 위한 선언↓
-    private RecyclerView detailviewfragment_recyclerview;
-    private LinearLayout item;
+    private RecyclerView followerList_recyclerview;
     private DetailAdapter adapter;
     private LinearLayoutManager layoutManager;
     ArrayList<ContentDTO> contentDTOs = new ArrayList<>();
     ArrayList<String> contentUidList = new ArrayList<>();
     String uid;
-String username;
+    String username;
+    String comment;
     private ImageView detailviewitem_favrite_imageview;
 
 
@@ -42,26 +40,26 @@ String username;
 
     //2번
     @Nullable
-    @Override
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frag1,container,false);
+        view = inflater.inflate(R.layout.frag6,container,false);
 
         firestore = FirebaseFirestore.getInstance();
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         username = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         //리싸이클러뷰를 정의한다.↓
-        detailviewfragment_recyclerview = view.findViewById(R.id.detailviewfragment_recyclerview);
-        detailviewfragment_recyclerview.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,true);
+        followerList_recyclerview = view.findViewById(R.id.follower_recy);
+        followerList_recyclerview.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,true);
         layoutManager.setStackFromEnd(true);
-        detailviewfragment_recyclerview.setLayoutManager(layoutManager);
+        followerList_recyclerview.setLayoutManager(layoutManager);
         //adapter에 contentDTOs를 담아서
         //리싸이클러뷰에 적용 시킨다.
-        adapter = new DetailAdapter(getActivity(),contentDTOs);
-        detailviewfragment_recyclerview.setAdapter(adapter);
+     //   adapter = new DetailAdapter(,contentDTOs);
+        followerList_recyclerview.setAdapter(adapter);
         detailviewitem_favrite_imageview = view.findViewById(R.id.detailviewitem_favrite_imageview);
-
 
 
         return view;
