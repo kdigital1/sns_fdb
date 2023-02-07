@@ -113,7 +113,6 @@ String username;
         holder.detailviewitem_profile_textview.setTextColor(Color.parseColor("#000000"));
 
         holder.detailviewitem_profile_textview.setText(contentDTOs.get(position).getUsername());
-        holder.detailviewitem_timestamp_textview.setText(contentDTOs.get(position).getTimestamp());
         Glide.with(holder.itemView)
                 .load(contentDTOs.get(position).getImageUri())
                 .into(holder.detailviewitem_profile_imageview_content);
@@ -225,19 +224,6 @@ String username;
         });
 
 
-        holder.detailviewitem_profile_imageview_content.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),ItemActivity.class);
-                intent.putExtra("contentUid", contentUidList.get(position));
-                intent.putExtra("destinationUid",contentDTOs.get(position).getUid());
-                intent.putExtra("destinationEmail",contentDTOs.get(position).getEmail());
-                intent.putExtra("destinationImageUri",contentDTOs.get(position).getImageUri());
-                intent.putExtra("destinationUsername",contentDTOs.get(position).getUsername());
-                context.startActivity(intent);
-            }
-        });
-
 
 
         holder.detailviewitem_comment_imageview.setOnClickListener(new View.OnClickListener() {
@@ -253,7 +239,6 @@ String username;
 
     }
 
-
     @Override
     public int getItemCount() {
         return contentDTOs.size();
@@ -262,7 +247,6 @@ String username;
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView detailviewitem_profile_image;
         TextView detailviewitem_profile_textview;
-        TextView detailviewitem_timestamp_textview;
         ImageView detailviewitem_profile_imageview_content;
         TextView detailviewitem_favoritecounter_textview;
         TextView detailviewitem_explain_textview;
@@ -277,7 +261,6 @@ String username;
             this.detailviewitem_explain_textview = itemView.findViewById(R.id.detailviewitem_explain_textview);
             this.detailviewitem_favrite_imageview = itemView.findViewById(R.id.detailviewitem_favrite_imageview);
             this.detailviewitem_comment_imageview = itemView.findViewById(R.id.detailviewitem_comment_imageview);
-            this.detailviewitem_timestamp_textview = itemView.findViewById(R.id.detailviewitem_timestamp_textview);
         }
     }
     private void favoriteAlarm(String destinationUid){
