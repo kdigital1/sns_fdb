@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,12 +43,15 @@ import com.example.sns.navigation.model.AlarmDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder>{
     private FirebaseFirestore firestore;
     private Context context;
     private Activity activity;
     private ImageView detailviewitem_favrite_imageview;
+    private FirebaseAuth mFirebaseAuth;
+    private String currentUserUid;
 
 
     ArrayList<ContentDTO> contentDTOs;
@@ -110,6 +114,21 @@ String username;
     //이곳에서 변경되는 부분을 작성하면 다음 프래그1이 실행 될때 추가된다.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
+        String uid2 = contentDTOs.get(position).getUid();
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        currentUserUid = mFirebaseAuth.getInstance().getCurrentUser().getUid();
+        if(Objects.equals(uid2, currentUserUid)){
+            holder.item_update.setVisibility(View.VISIBLE);
+            holder.item_delete.setVisibility(View.VISIBLE);
+        }else {
+            holder.item_update.setVisibility(View.INVISIBLE);
+            holder.item_delete.setVisibility(View.INVISIBLE);
+        }
+
+        Log.e("TAG", "게시글uid = "+ uid2);
+        Log.e("TAG", "게시글currentUserUid = "+ currentUserUid);
+
         holder.detailviewitem_profile_textview.setTextColor(Color.parseColor("#000000"));
 
         holder.detailviewitem_profile_textview.setText(contentDTOs.get(position).getUsername());
@@ -153,9 +172,6 @@ String username;
                 ft = fm.beginTransaction();
                 ft.replace(R.id.main_content,fragment);
                 ft.commit();
-
-
-
             }
         });
 
@@ -252,6 +268,8 @@ String username;
         TextView detailviewitem_explain_textview;
         ImageView detailviewitem_favrite_imageview;
         ImageView detailviewitem_comment_imageview;
+        TextView item_update;
+        TextView item_delete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.detailviewitem_profile_image = itemView.findViewById(R.id.detailviewitem_profile_image);
@@ -261,6 +279,9 @@ String username;
             this.detailviewitem_explain_textview = itemView.findViewById(R.id.detailviewitem_explain_textview);
             this.detailviewitem_favrite_imageview = itemView.findViewById(R.id.detailviewitem_favrite_imageview);
             this.detailviewitem_comment_imageview = itemView.findViewById(R.id.detailviewitem_comment_imageview);
+            this.item_update=itemView.findViewById(R.id.item_update);
+            this.item_delete=itemView.findViewById(R.id.item_delete);
+
         }
     }
     private void favoriteAlarm(String destinationUid){
