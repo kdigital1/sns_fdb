@@ -113,6 +113,7 @@ String username;
         holder.detailviewitem_profile_textview.setTextColor(Color.parseColor("#000000"));
 
         holder.detailviewitem_profile_textview.setText(contentDTOs.get(position).getUsername());
+
         Glide.with(holder.itemView)
                 .load(contentDTOs.get(position).getImageUri())
                 .into(holder.detailviewitem_profile_imageview_content);
@@ -239,6 +240,7 @@ String username;
 
     }
 
+
     @Override
     public int getItemCount() {
         return contentDTOs.size();
@@ -247,6 +249,7 @@ String username;
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView detailviewitem_profile_image;
         TextView detailviewitem_profile_textview;
+        TextView detailviewitem_timestamp_textview;
         ImageView detailviewitem_profile_imageview_content;
         TextView detailviewitem_favoritecounter_textview;
         TextView detailviewitem_explain_textview;
@@ -261,6 +264,7 @@ String username;
             this.detailviewitem_explain_textview = itemView.findViewById(R.id.detailviewitem_explain_textview);
             this.detailviewitem_favrite_imageview = itemView.findViewById(R.id.detailviewitem_favrite_imageview);
             this.detailviewitem_comment_imageview = itemView.findViewById(R.id.detailviewitem_comment_imageview);
+            this.detailviewitem_timestamp_textview = itemView.findViewById(R.id.detailviewitem_timestamp_textview);
         }
     }
     private void favoriteAlarm(String destinationUid){

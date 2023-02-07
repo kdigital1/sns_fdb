@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -60,7 +62,7 @@ public class Frag5 extends Fragment {
 
 
     private RecyclerView account_recyclerview;
-    private RecyclerView followerList;
+    private LinearLayout followerList;
     private UserFragmentRecyclerviewAdapter adapter;
 
     private GridLayoutManager gridLayoutManager;
@@ -83,11 +85,9 @@ public class Frag5 extends Fragment {
 
         account_btn_follow_signout = fragmentView.findViewById(R.id.account_btn_follow_signout);
         account_iv_profile = fragmentView.findViewById(R.id.account_iv_profile);
-        followerList = fragmentView.findViewById(R.id.tvage);
-        followerList = fragmentView.findViewById(R.id.name);
         account_tv_following_count = fragmentView.findViewById(R.id.account_tv_following_count);
         account_tv_follower_count = fragmentView.findViewById(R.id.account_tv_follower_count);
-
+        followerList = fragmentView.findViewById(R.id.followerlist);
         //DetailAdapter 에서 넘겨 받은 데이터
         //상대방 정보
         uid = getArguments().getString("destinationUid");
@@ -126,13 +126,19 @@ public class Frag5 extends Fragment {
                 }
             });
 
-            account_tv_follower_count.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent followerList = new Intent(Intent.ACTION_PICK);
-                    getActivity().startActivityForResult(followerList, PICK_PROFILE_FROM_ALBUM);
-                }
-            });
+//            followerList.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Intent followerList = new Intent(getActivity(),Frag6.class);
+//
+//                    Intent intent = new Intent(view.getContext(), CommentActivity.class);
+//                    intent.putExtra("contentUid", contentUidList.get(position));
+//                    intent.putExtra("destinationUid",contentDTOs.get(position).getUid());
+//                    intent.putExtra("destinationEmail",contentDTOs.get(position).getEmail());
+//                    startActivity(followerList);
+//
+//                }
+//            });
             account_btn_follow_signout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -336,7 +342,7 @@ public class Frag5 extends Fragment {
         public UserFragmentRecyclerviewAdapter(ArrayList<ContentDTO> contentDTOs){
             contentDTOs.clear();
             String user_test = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-            Toast.makeText(getActivity(), user_test, Toast.LENGTH_SHORT).show();
+
 
             firestore.collection("images").whereEqualTo("uid",uid).get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

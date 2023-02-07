@@ -1,10 +1,12 @@
 package com.example.sns.navigation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,9 +24,11 @@ import java.util.ArrayList;
 //detail Fragment
 public class Frag1 extends Fragment {
     private View view;
+    private View fragmentView;
     private FirebaseFirestore firestore;
     //리싸이클러뷰 사용을 위한 선언↓
     private RecyclerView detailviewfragment_recyclerview;
+    private LinearLayout item;
     private DetailAdapter adapter;
     private LinearLayoutManager layoutManager;
     ArrayList<ContentDTO> contentDTOs = new ArrayList<>();
@@ -57,6 +61,7 @@ String username;
         adapter = new DetailAdapter(getActivity(),contentDTOs);
         detailviewfragment_recyclerview.setAdapter(adapter);
         detailviewitem_favrite_imageview = view.findViewById(R.id.detailviewitem_favrite_imageview);
+
 
 
         return view;
