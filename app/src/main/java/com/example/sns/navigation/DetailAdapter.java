@@ -2,10 +2,14 @@ package com.example.sns.navigation;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -126,8 +131,25 @@ String username;
             holder.item_delete.setVisibility(View.INVISIBLE);
         }
 
-        Log.e("TAG", "게시글uid = "+ uid2);
-        Log.e("TAG", "게시글currentUserUid = "+ currentUserUid);
+        holder.item_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), UpdatePhoto.class);
+                intent.putExtra("position",position);
+                v.getContext().startActivity(intent);
+            }
+        });
+        holder.item_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseFirestore.getInstance().collection("images").document(contentUidList.get(position)).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(v.getContext(), "삭제완료",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
 
         holder.detailviewitem_profile_textview.setTextColor(Color.parseColor("#000000"));
 
@@ -137,7 +159,6 @@ String username;
                 .into(holder.detailviewitem_profile_imageview_content);
         holder.detailviewitem_explain_textview.setText(contentDTOs.get(position).getExplain());
         holder.detailviewitem_favoritecounter_textview.setText("Likes "+contentDTOs.get(position).getFavoriteCount());
-
         FirebaseFirestore.getInstance().collection("profileImage").document(contentDTOs.get(position).getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot value) {
@@ -282,6 +303,7 @@ String username;
             this.item_update=itemView.findViewById(R.id.item_update);
             this.item_delete=itemView.findViewById(R.id.item_delete);
 
+
         }
     }
     private void favoriteAlarm(String destinationUid){
@@ -294,14 +316,5 @@ String username;
         FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO);
 
         String message = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    }
-    private void getEmail(){
-        firestore.collection("Images").document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot value) {
-                    String str = String.valueOf(value.getData().get("email"));
-
-            }
-        });
     }
 }

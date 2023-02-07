@@ -112,19 +112,10 @@ public class AddPhotoActivity extends AppCompatActivity {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                //이미지 업로드 실패 공간
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                //이미지 업로드 공간///////////////////////////
-                //올라가는 중이라는 로딩 표시가 있으면 더 좋을 듯 하다.
-
-
-                ////////////////////////////////////////////
-
-
-                //바로 위에서 올린 이미지 uri를 가져와는 곳↓
                 pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
