@@ -148,6 +148,7 @@ String username;
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(v.getContext(), "삭제완료",Toast.LENGTH_SHORT).show();
+                        notifyDataSetChanged();
                     }
                 });
             }

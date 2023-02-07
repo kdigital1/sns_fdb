@@ -120,7 +120,6 @@ public class UpdatePhoto extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReference();
         StorageReference pathReference = storageReference.child("images").child(imageFileName);
-        String uri = String.valueOf(updatephoto_img);
 
         UploadTask uploadTask = pathReference.putFile(photoUri);
         uploadTask.addOnFailureListener(new OnFailureListener() {
