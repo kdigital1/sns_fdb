@@ -113,7 +113,7 @@ String username;
         holder.detailviewitem_profile_textview.setTextColor(Color.parseColor("#000000"));
 
         holder.detailviewitem_profile_textview.setText(contentDTOs.get(position).getUsername());
-
+        holder.detailviewitem_timestamp_textview.setText(contentDTOs.get(position).getTimestamp());
         Glide.with(holder.itemView)
                 .load(contentDTOs.get(position).getImageUri())
                 .into(holder.detailviewitem_profile_imageview_content);
@@ -224,6 +224,19 @@ String username;
             }
         });
 
+
+        holder.detailviewitem_profile_imageview_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),ItemActivity.class);
+                intent.putExtra("contentUid", contentUidList.get(position));
+                intent.putExtra("destinationUid",contentDTOs.get(position).getUid());
+                intent.putExtra("destinationEmail",contentDTOs.get(position).getEmail());
+                intent.putExtra("destinationImageUri",contentDTOs.get(position).getImageUri());
+                intent.putExtra("destinationUsername",contentDTOs.get(position).getUsername());
+                context.startActivity(intent);
+            }
+        });
 
 
 

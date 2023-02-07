@@ -49,12 +49,11 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     private TextView textJoin;
     private FirebaseAuth mFirebaseAuth;
     private GoogleSignInClient mGoogleSignInClient;
-    private GoogleApiClient googleApiClient;
     private static final int RC_SIGN_IN = 9001;
     private static final int FACEBOOK_LOGIN_IN = 64206;
     private SignInButton btnGoogleLogin;
     private CallbackManager callbackManager;
-    private LoginManager loginManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +70,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
 
         mFirebaseAuth = FirebaseAuth.getInstance();
-        //https://chobodogfootruler.tistory.com/30 참고
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -116,29 +114,6 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
             }
         });
     }
-
-    private void facebookLogin() {
-        loginManager.getInstance()
-                .logInWithReadPermissions(this, Arrays.asList("email","public_profile"));
-        loginManager.getInstance()
-                .registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        handleFacebookAccessToken(loginResult.getAccessToken());
-
-                    }
-                    @Override
-                    public void onCancel() {
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                    }
-                });
-
-    }
-
-
 
     private void handleFacebookAccessToken(AccessToken accessToken) {
         AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
