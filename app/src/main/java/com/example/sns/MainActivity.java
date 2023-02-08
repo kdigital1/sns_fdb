@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-    @SuppressLint("MissingInflatedId")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,7 @@
 package com.example.sns.navigation;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -60,14 +61,14 @@ public class Frag5 extends Fragment {
     private ImageView account_iv_profile;
     private TextView account_tv_following_count;
     private TextView account_tv_follower_count;
-
-
+    private ImageView detailviewitem_profile_imageview_content;
+    private Context itemview;
     private RecyclerView account_recyclerview;
     private LinearLayout followerList;
     private UserFragmentRecyclerviewAdapter adapter;
 
     private GridLayoutManager gridLayoutManager;
-
+    public ArrayList<String> contentUidList = new ArrayList<>();
     ArrayList<ContentDTO> contentDTOs = new ArrayList<>();
     TextView account_tv_post_count;
 
@@ -402,6 +403,7 @@ public class Frag5 extends Fragment {
 //            imageview.setLayoutParams(new LinearLayoutCompat.LayoutParams(width,width));
 //
 //            ViewHolder holder = new ViewHolder(imageview);
+
             return holder;
         }
 
@@ -439,6 +441,8 @@ public class Frag5 extends Fragment {
 
                     }
                 });
+
+
             }
         }
 
@@ -453,12 +457,16 @@ public class Frag5 extends Fragment {
             TextView toolbar_username;
             ImageView account_iv_profile;
             TextView account_tv_following_count;
+            ImageView detailviewitem_favoritecounter_textview;
+            ImageView detailviewitem_profile_imageview_content;
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 this.account_tv_post_count = itemView.findViewById(R.id.account_tv_post_count);
                 this.profile_image = itemView.findViewById(R.id.profile_image);
                 this.account_iv_profile = itemView.findViewById(R.id.account_iv_profile);
                 this.account_tv_following_count =itemView.findViewById(R.id.account_tv_following_count);
+                this.detailviewitem_favoritecounter_textview = itemView.findViewById(R.id.detailviewitem_favoritecounter_textview);
+                this.detailviewitem_profile_imageview_content = itemView.findViewById(R.id.detailviewitem_profile_imageview_content);
             }
         }
     }

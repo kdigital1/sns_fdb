@@ -24,6 +24,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.sns.MainActivity;
 import com.example.sns.R;
 import com.example.sns.User;
+import com.example.sns.navigation.model.ContentDTO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,36 +55,34 @@ public class ItemActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private TextView detailviewitem_favoritecounter_textview;
     private TextView detailviewitem_explain_textview;
-    ArrayList<Comment> comments = new ArrayList<>();
-
     private String destinationUid;
     private String destinationImageUri;
     private String destinationUsername;
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.item_detail);
+        setContentView(R.layout.item_view);
+        ContentDTO contentDTO = new ContentDTO();
+        contentDTO.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        FirebaseFirestore.getInstance().collection("contents").document().set(contentDTO);
 
-
+        String message = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         contentUid = getIntent().getStringExtra("contentUid");
         destinationUid = getIntent().getStringExtra("destinationUid");
-        destinationImageUri = getIntent().getStringExtra("destinationImageUri");
+        destinationImageUri = getIntent().getStringExtra("destinationUri");
         destinationUsername = getIntent().getStringExtra("destinationUsername");
         detailviewitem_profile_image = findViewById(R.id.detailviewitem_profile_image);
         detailviewitem_profile_textview = findViewById(R.id.detailviewitem_profile_textview);
 
-    //   detailviewitem_timestamp_textview = findViewById(R.id.detailviewitem_timestamp_textview)
+        //   detailviewitem_timestamp_textview = findViewById(R.id.detailviewitem_timestamp_textview)
         detailviewitem_profile_image = findViewById(R.id.detailviewitem_profile_image);
         detailviewitem_profile_imageview_content = findViewById(R.id.detailviewitem_profile_imageview_content);
         detailviewitem_favrite_imageview = findViewById(R.id.detailviewitem_favrite_imageview);
         detailviewitem_explain_textview = findViewById(R.id.detailviewitem_explain_textview);
+    }
 
 
 
-
-
-
-
-        }
     }

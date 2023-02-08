@@ -20,6 +20,9 @@
             android:name=".navigation.CommentActivity"
             android:exported="true" />
         <activity
+            android:name=".navigation.ItemActivity"
+            android:exported="true" />
+        <activity
             android:name=".navigation.AddPhotoActivity"
             android:exported="true"
             tools:ignore="MissingClass" />

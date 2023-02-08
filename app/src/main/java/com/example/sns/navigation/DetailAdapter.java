@@ -47,7 +47,9 @@ import com.google.firebase.firestore.Transaction;
 import com.example.sns.MainActivity;
 import com.example.sns.navigation.model.AlarmDTO;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -55,6 +57,7 @@ import java.util.Objects;
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder>{
     private FirebaseFirestore firestore;
     private Context context;
+    private Context itemview;
     private Activity activity;
     private ImageView detailviewitem_favrite_imageview;
     private FirebaseAuth mFirebaseAuth;
@@ -79,6 +82,7 @@ String username;
 
     public DetailAdapter(Context context,ArrayList<ContentDTO> contentDTOs) {
         this.context = context;
+        this.itemview = context;
         this.contentDTOs = contentDTOs;
 
         firestore = FirebaseFirestore.getInstance();
@@ -191,10 +195,14 @@ String username;
                 bundle.putString("destinationEmail",contentDTOs.get(position).getEmail());
                 bundle.putString("userId",contentDTOs.get(position).getUserId());
                 fragment.setArguments(bundle);
-
+                FragmentManager iv = ((MainActivity)itemview).getSupportFragmentManager();
                 FragmentManager fm = ((MainActivity)context).getSupportFragmentManager();
                 FragmentTransaction ft;
+                FragmentTransaction vi;
                 ft = fm.beginTransaction();
+                vi = iv.beginTransaction();
+                vi.replace(R.id.main_content,fragment);
+                vi.commit();
                 ft.replace(R.id.main_content,fragment);
                 ft.commit();
             }
@@ -266,6 +274,18 @@ String username;
 
 
 
+        holder.detailviewitem_profile_imageview_content.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent itemIntent = new Intent(view.getContext(),ItemActivity.class);
+                itemIntent.putExtra("contentUid", contentUidList.get(position));
+                itemIntent.putExtra("destinationUid",contentDTOs.get(position).getUid());
+                itemIntent.putExtra("destinationEmail",contentDTOs.get(position).getEmail());
+                itemIntent.putExtra("destinationUri",contentDTOs.get(position).getImageUri());
+                itemview.startActivity(itemIntent);
+            }
+        });
+
 
         holder.detailviewitem_comment_imageview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,6 +313,7 @@ String username;
         TextView detailviewitem_explain_textview;
         ImageView detailviewitem_favrite_imageview;
         ImageView detailviewitem_comment_imageview;
+
 TextView detailviewitem_time_textview;
         TextView item_update;
         TextView item_delete;
@@ -319,7 +340,12 @@ TextView detailviewitem_time_textview;
         alarmDTO.setUserId(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         alarmDTO.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
         alarmDTO.setKind(0);
-        alarmDTO.setTimestamp(String.valueOf(System.currentTimeMillis()));
+        Long now =  System.currentTimeMillis();
+        Date mDate = new Date(now);
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String getTime = simpleDate.format(mDate);
+        alarmDTO.setTimestamp(getTime);
+
         FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO);
 
         String message = FirebaseAuth.getInstance().getCurrentUser().getEmail();
