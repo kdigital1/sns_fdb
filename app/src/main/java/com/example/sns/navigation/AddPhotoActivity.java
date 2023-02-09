@@ -92,6 +92,8 @@ public class AddPhotoActivity extends AppCompatActivity {
 
             }else{
                 //취소를 눌렀을때
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
                 finish();
             }
         }

@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity{
                         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         bundle.putString("destinationUid",uid);
                         frag5.setArguments(bundle);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_content,frag5).commit();
+                        //getSupportFragmentManager().beginTransaction().replace(R.id.main_content,frag5).commit();
 
                         setFrag(4);
                         break;
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity{
                 ft.commit();
                 break;
             case 2:
-                ft.replace(R.id.main_content,frag1);
+                ft.replace(R.id.main_content,frag3);
                 ft.commit();
                 break;
             case 3:
