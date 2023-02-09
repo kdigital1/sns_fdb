@@ -80,7 +80,7 @@ public class ItemActivity extends AppCompatActivity {
         contentDTO.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
         FirebaseFirestore.getInstance().collection("contents").document().set(contentDTO);
 
-        String message = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String message  = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
 
 
