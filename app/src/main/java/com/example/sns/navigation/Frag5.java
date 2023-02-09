@@ -254,7 +254,7 @@ public class Frag5 extends Fragment {
                     }
 
                     set_follow.put(uid, true);
-                    followDTO.setFollowerlist(uid);
+
 
                     followDTO.setFollowingCount(followDTO.getFollowingCount() + 1);
                     followDTO.setFollowings(set_follow);

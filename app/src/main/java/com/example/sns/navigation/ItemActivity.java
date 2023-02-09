@@ -83,6 +83,7 @@ public class ItemActivity extends AppCompatActivity {
         String message = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
 
+
         contentUid = getIntent().getStringExtra("contentUid");
         Log.d("sss", contentUid+"");
         destinationUid = getIntent().getStringExtra("destinationUid");
