@@ -102,6 +102,7 @@ public class ItemActivity extends AppCompatActivity {
           detailviewitem_timestamp_textview = findViewById(R.id.detailviewitem_time_textview);
         detailviewitem_timestamp_textview.setText(destinationtimestamp);
         detailviewitem_profile_image = findViewById(R.id.detailviewitem_profile_image);
+        detailviewitem_profile_image = findViewById(R.id.detailviewitem_profile_image);
 
 
         Glide.with(this)
