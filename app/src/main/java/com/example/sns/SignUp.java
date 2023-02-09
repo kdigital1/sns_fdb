@@ -79,6 +79,7 @@ public class SignUp extends AppCompatActivity {
                 photoPickIntent.setType("image/*");
                 startActivityForResult(photoPickIntent, PICK_PROFILE_FROM_ALBUM);
                 account_tv_profile.setVisibility(View.INVISIBLE);
+
             }
         });
 
