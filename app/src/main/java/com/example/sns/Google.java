@@ -151,9 +151,29 @@ public class Google extends AppCompatActivity {
     }
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-            profileimage.setImageURI(data.getData());
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = mAuth.getCurrentUser();
+        Thread mThread= new Thread(){
+            @Override
+            public void run() {
+                try{
+                    //현재로그인한 사용자 정보를 통해 PhotoUrl 가져오기
+                    URL url = new URL(user.getPhotoUrl().toString());
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoInput(true);
+                    conn.connect();
+                    InputStream is = conn.getInputStream();
+                    bitmap = BitmapFactory.decodeStream(is);
+                } catch (MalformedURLException ee) {
+                    ee.printStackTrace();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        };
+        mThread.start();
             imageUri =getImageUri(Google.this,bitmap);
+            Log.e("비트맵", String.valueOf(bitmap));
     }
     private Uri getImageUri(Context context, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
