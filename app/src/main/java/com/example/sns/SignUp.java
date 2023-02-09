@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.content.CursorLoader;
 
 import com.example.sns.navigation.Frag5;
+import com.example.sns.navigation.model.ContentDTO;
 import com.example.sns.navigation.model.ProfileImage;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,6 +46,7 @@ public class SignUp extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private ImageView account_iv_profile;
     private Uri imageUri;
+    private Uri getProfileUri;
     public static int PICK_PROFILE_FROM_ALBUM=10;
     private FirebaseFirestore firestore;
     private FrameLayout signupframe;
@@ -148,11 +150,14 @@ public class SignUp extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Uri uri) {
                                             User userModel = new User();
+                                            ContentDTO dto = new ContentDTO();
                                             userModel.setUsername(edtSignName.getText().toString());
                                             userModel.setEmail(edtSignEmail.getText().toString());
                                             userModel.setUid(uid);
                                             String img_uri = uri.toString();
+                                            String getProfileUri= uri.toString();
                                             userModel.setProfileUri(img_uri);
+
                                             db.collection("profileImage").document(uid)
                                                     .set(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
@@ -163,12 +168,59 @@ public class SignUp extends AppCompatActivity {
                                                         }
                                                     });
                                         }
+
                                     });
+
                                 } else {
                                     Toast.makeText(SignUp.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
+                        profileImageRef.putFile(getProfileUri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                            @Override
+                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                if (!task.isSuccessful()) {
+                                    throw task.getException();
+                                }
+                                return profileImageRef.getDownloadUrl();
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                if (task.isSuccessful()) {
+
+                                    StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("userProfileImages").child(uid);
+
+                                    storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            User userModel = new User();
+                                            ContentDTO dto = new ContentDTO();
+                                            userModel.setUsername(edtSignName.getText().toString());
+                                            userModel.setEmail(edtSignEmail.getText().toString());
+                                            userModel.setUid(uid);
+                                            String img_uri = uri.toString();
+                                            userModel.setProfileUri(img_uri);
+                                            dto.setProfileUri(img_uri);
+                                            db.collection("profileImage").document(uid)
+                                                    .set(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void unused) {
+                                                            Toast.makeText(SignUp.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                                                            Intent intent = new Intent(getApplication(), Login.class);
+                                                            startActivity(intent);
+                                                        }
+                                                    });
+                                        }
+
+                                    });
+
+                                } else {
+                                    Toast.makeText(SignUp.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
                     }
                 });
     }
@@ -177,7 +229,8 @@ public class SignUp extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_PROFILE_FROM_ALBUM && resultCode == RESULT_OK) {
             account_iv_profile.setImageURI(data.getData());    //가운데 뷰를 바꿈
-            imageUri = data.getData();    //이미지 경로 원본
+            imageUri = data.getData();
+            getProfileUri = data.getData(); //이미지 경로 원본
         }
     }
 }

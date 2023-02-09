@@ -2,6 +2,8 @@ package com.example.sns.navigation;
 
 
 
+import static com.example.sns.navigation.Frag5.str;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,6 +37,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.sns.R;
 import com.example.sns.User;
 import com.example.sns.navigation.model.ContentDTO;
+import com.example.sns.navigation.model.ProfileImage;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -63,7 +66,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private FirebaseAuth mFirebaseAuth;
     private String currentUserUid;
     private TextView detailviewitem_time_textview;
-
+    ArrayList<ProfileImage> ProfileImages;
     ArrayList<ContentDTO> contentDTOs;
     ArrayList<User> user;
     public ArrayList<String> contentUidList = new ArrayList<>();
@@ -277,11 +280,32 @@ String username;
         holder.detailviewitem_profile_imageview_content.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseFirestore.getInstance().collection("profileImage").document(contentDTOs.get(position).getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+                    //        itemIntent.putExtra("destinationProfileUri",ProfileImage.get(position).getImageUri());
+
+                    @Override
+                    public void onSuccess(DocumentSnapshot value) {
+                        Intent itemIntent = new Intent(view.getContext(),ItemActivity.class);
+                        String str = String.valueOf(value.getData().get("profileUri"));
+                        //str=str.substring(10,str.length()-1);
+                        Uri uri = Uri.parse(str);
+
+
+                    }
+                });
                 Intent itemIntent = new Intent(view.getContext(),ItemActivity.class);
+                itemIntent.putExtra("destinationProfileUri",contentDTOs.get(position).getProfileUri());
                 itemIntent.putExtra("contentUid", contentUidList.get(position));
                 itemIntent.putExtra("destinationUid",contentDTOs.get(position).getUid());
                 itemIntent.putExtra("destinationEmail",contentDTOs.get(position).getEmail());
                 itemIntent.putExtra("destinationUri",contentDTOs.get(position).getImageUri());
+                itemIntent.putExtra("destinationUsername",contentDTOs.get(position).getUsername());
+                itemIntent.putExtra("destinationtimestamp",contentDTOs.get(position).getTimestamp());
+                itemIntent.putExtra("destinationExplain",contentDTOs.get(position).getExplain());
+                itemIntent.putExtra("destinationProfileUri",contentDTOs.get(position).getProfileUri());
+
+
                 itemview.startActivity(itemIntent);
             }
         });

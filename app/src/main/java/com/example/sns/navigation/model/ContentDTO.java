@@ -12,12 +12,19 @@ public class ContentDTO {
     private String timestamp;
     private int favoriteCount;
     private String username;
+    private String getProfileUri;
     private Map<String,Boolean> favorites  = new HashMap<>();
-
+    private String destinationUid = null;
     public ContentDTO(){
 
     }
+    public String getDestinationUid() {
+        return destinationUid;
+    }
 
+    public void setDestinationUid(String destinationUid) {
+        this.destinationUid = destinationUid;
+    }
     public String getUsername() {
         return username;
     }
@@ -87,6 +94,13 @@ public class ContentDTO {
         this.favorites = favorites;
     }
 
+    public String getProfileUri() {
+        return getProfileUri;
+    }
+
+    public void setProfileUri(String getProfileUri) {
+        this.getProfileUri = getProfileUri;
+    }
 
     public static class Comment{
         private String uid;
