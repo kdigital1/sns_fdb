@@ -116,7 +116,7 @@ public class Frag5 extends Fragment {
         getProfileImage();
         getFollowerAndFollowing();
 
-        if(uid==currentUserUid){
+        if(uid.equals(currentUserUid)){
             //나의 페이지
             account_btn_follow_signout.setText("로그아웃");
             account_iv_profile.setOnClickListener(new View.OnClickListener() {

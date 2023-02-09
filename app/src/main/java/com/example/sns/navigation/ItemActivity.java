@@ -124,6 +124,7 @@ public class ItemActivity extends AppCompatActivity {
 
     }
 
+
     public void ItemView (String destinationUid, String explain){
         ContentDTO contentDTO = new ContentDTO();
         contentDTO.setDestinationUid(destinationUid);

@@ -62,6 +62,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     private Context context;
     private Context itemview;
     private Activity activity;
+
     private ImageView detailviewitem_favrite_imageview;
     private FirebaseAuth mFirebaseAuth;
     private String currentUserUid;
@@ -196,6 +197,7 @@ String username;
                 Bundle bundle = new Bundle();
                 bundle.putString("destinationUid",contentDTOs.get(position).getUid());
                 bundle.putString("destinationEmail",contentDTOs.get(position).getEmail());
+
                 bundle.putString("userId",contentDTOs.get(position).getUserId());
                 fragment.setArguments(bundle);
                 FragmentManager iv = ((MainActivity)itemview).getSupportFragmentManager();
