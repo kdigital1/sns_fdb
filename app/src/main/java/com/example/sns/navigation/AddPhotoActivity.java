@@ -95,6 +95,7 @@ public class AddPhotoActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
                 finish();
+
             }
         }
     }
