@@ -27,6 +27,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.sns.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -91,6 +92,7 @@ public class Frag5 extends Fragment {
         //DetailAdapter 에서 넘겨 받은 데이터
         //상대방 정보
         uid = getArguments().getString("destinationUid");
+
         //현재 로그인 되어 있는 아이디
         currentUserUid = mFirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -125,20 +127,21 @@ public class Frag5 extends Fragment {
 
                 }
             });
+/*
+            followerList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ArrayList<String> contentUidList = new ArrayList<>();
+                    Intent followerList = new Intent(getActivity(),Frag6.class);
+                    int position = getArguments().getInt("position",0);
+                    followerList.putExtra("uid",uid);
+                    //followerList.putExtra("destinationEmail",contentDTOs.get(position).getEmail());
+                    startActivity(followerList);
+                }
+            });
 
-//            followerList.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent followerList = new Intent(getActivity(),Frag6.class);
-//
-//                    Intent intent = new Intent(view.getContext(), CommentActivity.class);
-//                    intent.putExtra("contentUid", contentUidList.get(position));
-//                    intent.putExtra("destinationUid",contentDTOs.get(position).getUid());
-//                    intent.putExtra("destinationEmail",contentDTOs.get(position).getEmail());
-//                    startActivity(followerList);
-//
-//                }
-//            });
+ */
+
             account_btn_follow_signout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -250,7 +253,7 @@ public class Frag5 extends Fragment {
                     }
 
                     set_follow.put(uid, true);
-
+                    followDTO.setFollowerlist(uid);
 
                     followDTO.setFollowingCount(followDTO.getFollowingCount() + 1);
                     followDTO.setFollowings(set_follow);
@@ -265,7 +268,7 @@ public class Frag5 extends Fragment {
             }
         });
         //내가 친구를 선택 팔로잉
-        //uid는 다른사람의 정보
+        //uid는 다른사람의 정보+
         //currentUserUid는 현재 로그인된 나의 정보
         DocumentReference tsDocFollower = firestore.collection("users").document(uid);
         firestore.runTransaction(new Transaction.Function<Object>() {
@@ -278,7 +281,7 @@ public class Frag5 extends Fragment {
                     followDTO.setFollowerCount(1);
                     Map<String, Boolean> set_follow = new HashMap<>();
                     set_follow.clear();
-                    set_follow.put(currentUserUid, true);
+                    set_follow.put(currentUserUid,true);
                     followDTO.setFollowers(set_follow);
 
                     transaction.set(tsDocFollower, followDTO);

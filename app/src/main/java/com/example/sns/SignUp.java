@@ -81,6 +81,7 @@ public class SignUp extends AppCompatActivity {
             public void onClick(View view) {
                 String strEmail = edtSignEmail.getText().toString();
                 String strPwd = edtSignPwd.getText().toString();
+                String strName = edtSignName.getText().toString();
                 int strLength = strPwd.length();
 
                 if(account_iv_profile.getDrawable()==null){
@@ -96,7 +97,7 @@ public class SignUp extends AppCompatActivity {
                     Toast.makeText(SignUp.this,"이메일 형식이 아닙니다",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(edtSignEmail.getText().toString().length()==0){
+                if(edtSignName.getText().toString().length()==0){
                     Toast.makeText(SignUp.this,"이름을 입력하세요",Toast.LENGTH_SHORT).show();
                     return;
                 }
