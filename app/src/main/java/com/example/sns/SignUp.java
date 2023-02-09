@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ public class SignUp extends AppCompatActivity {
     public static int PICK_PROFILE_FROM_ALBUM=10;
     private FirebaseFirestore firestore;
     private FrameLayout signupframe;
+    private TextView account_tv_profile;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -64,6 +66,7 @@ public class SignUp extends AppCompatActivity {
         edtSignName=findViewById(R.id.edtSignName);
         account_iv_profile = findViewById(R.id.account_iv_profile);
         signupframe=findViewById(R.id.signupframe);
+        account_tv_profile=findViewById(R.id.account_tv_profile);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -73,6 +76,7 @@ public class SignUp extends AppCompatActivity {
                 Intent photoPickIntent = new Intent(Intent.ACTION_PICK);
                 photoPickIntent.setType("image/*");
                 startActivityForResult(photoPickIntent, PICK_PROFILE_FROM_ALBUM);
+                account_tv_profile.setVisibility(View.INVISIBLE);
             }
         });
 
