@@ -129,6 +129,10 @@ public class AddPhotoActivity extends AppCompatActivity {
                                 FirebaseUser currentUser = mFirebaseAuth.getCurrentUser();
                                 ContentDTO dto = new ContentDTO();
                                 dto.setExplain(addphoto_edit.getText().toString());
+                                String img = String.valueOf(value.getData().get("profileUri"));
+                                //str=str.substring(10,str.length()-1);
+                                Uri uri = Uri.parse(img);;
+                                dto.setProfileUri(img);
                                 dto.setUid(currentUser.getUid());
                                 dto.setUserId(currentUser.getEmail());
                                 dto.setEmail(currentUser.getEmail());

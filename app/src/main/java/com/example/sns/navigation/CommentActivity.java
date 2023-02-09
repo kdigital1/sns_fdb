@@ -102,7 +102,12 @@ public class CommentActivity extends AppCompatActivity {
         alarmDTO.setUserId(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         alarmDTO.setKind(1);
         alarmDTO.setUid(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        alarmDTO.setTimestamp(String.valueOf(System.currentTimeMillis()));
+        Long now =  System.currentTimeMillis();
+        Date mDate = new Date(now);
+        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String getTime = simpleDate.format(mDate);
+        alarmDTO.setTimestamp(getTime);
+
         alarmDTO.setMessage(message);
         FirebaseFirestore.getInstance().collection("alarms").document().set(alarmDTO);
 
