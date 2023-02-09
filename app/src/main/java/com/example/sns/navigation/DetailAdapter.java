@@ -73,7 +73,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
     public ArrayList<String> contentUidList = new ArrayList<>();
 
     String uid;
-String username;
+    String username;
 
     Map<String,Boolean> favori  = new HashMap<>();
 
@@ -174,17 +174,17 @@ String username;
         holder.detailviewitem_explain_textview.setText(contentDTOs.get(position).getExplain());
         holder.detailviewitem_favoritecounter_textview.setText("Likes "+contentDTOs.get(position).getFavoriteCount());
         FirebaseFirestore.getInstance().collection("profileImage").document(contentDTOs.get(position).getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot value) {
-                        String str = String.valueOf(value.getData().get("profileUri"));
-                        //str=str.substring(10,str.length()-1);
-                        Uri uri = Uri.parse(str);
-                        Glide.with(holder.itemView)
-                                .load(uri)
-                                .apply(RequestOptions.circleCropTransform())
-                                .into(holder.detailviewitem_profile_image);
-                    }
-                });
+            @Override
+            public void onSuccess(DocumentSnapshot value) {
+                String str = String.valueOf(value.getData().get("profileUri"));
+                //str=str.substring(10,str.length()-1);
+                Uri uri = Uri.parse(str);
+                Glide.with(holder.itemView)
+                        .load(uri)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(holder.detailviewitem_profile_image);
+            }
+        });
 
         if(contentDTOs.get(position).getFavorites().containsKey(uid)){
             holder.detailviewitem_favrite_imageview.setImageResource(R.drawable.ic_baseline_favorite_24);
@@ -222,20 +222,7 @@ String username;
                 public void onClick(View view) {
                     favori.clear();
                     favori.put(uid, true);
-        holder.detailviewitem_favrite_imageview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                favori.clear();
-                favori.put(uid, true);
 
-                DocumentReference tsDoc = firestore.collection("images").document(contentUidList.get(position));
-                firestore.runTransaction(new Transaction.Function<Void>() {
-                    @Override
-                    public Void apply(@NonNull Transaction transaction) throws FirebaseFirestoreException {
-                        ContentDTO contentDTO = transaction.get(tsDoc).toObject(ContentDTO.class);
-                        if (contentDTO.getFavorites().containsKey(uid)) {
-                            contentDTO.setFavoriteCount(contentDTO.getFavoriteCount() - 1);
-                            contentDTO.getFavorites().remove(uid);
                     DocumentReference tsDoc = firestore.collection("images").document(contentUidList.get(position));
                     firestore.runTransaction(new Transaction.Function<Void>() {
                         @Override
@@ -245,15 +232,6 @@ String username;
                                 contentDTO.setFavoriteCount(contentDTO.getFavoriteCount() - 1);
                                 contentDTO.getFavorites().remove(uid);
 
-                            firestore.collection("images").whereEqualTo("favorites", favori)
-                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                            if (value != null) {
-                                                holder.detailviewitem_favrite_imageview.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-                                                holder.detailviewitem_favoritecounter_textview.setText("Likes " + contentDTO.getFavoriteCount());
-                                                return;
-                                            }
                                 firestore.collection("images").whereEqualTo("favorites", favori)
                                         .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                             @Override
@@ -266,10 +244,6 @@ String username;
 
                                                 for (DocumentSnapshot doc : value) {
 
-                                            }
-                                            notifyDataSetChanged();
-                                        }
-                                    });
                                                 }
                                                 notifyDataSetChanged();
                                             }
@@ -290,32 +264,12 @@ String username;
                                                     return;
                                                 }
                                                 for (DocumentSnapshot doc : value) {
-                        } else {
-                            favoriteAlarm(contentDTOs.get(position).getUid());
-                            contentDTO.setFavoriteCount(contentDTO.getFavoriteCount() + 1);
-                            contentDTO.getFavorites().put(uid, true);
-                            firestore.collection("images").whereEqualTo("favorites", favori)
-                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                            if (value != null) {
-                                                holder.detailviewitem_favrite_imageview.setImageResource(R.drawable.ic_baseline_favorite_24);
-                                                holder.detailviewitem_favoritecounter_textview.setText("Likes " + contentDTO.getFavoriteCount());
-                                                return;
-                                            }
-                                            for (DocumentSnapshot doc : value) {
 
                                                 }
                                                 notifyDataSetChanged();
                                             }
                                         });
-                                            }
-                                            notifyDataSetChanged();
-                                        }
-                                    });
 
-                        }
-                        transaction.set(tsDoc, contentDTO);
                             }
                             transaction.set(tsDoc, contentDTO);
 
@@ -326,6 +280,7 @@ String username;
                 }
             });
         }
+
 
         holder.detailviewitem_profile_imageview_content.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -388,7 +343,7 @@ String username;
         ImageView detailviewitem_favrite_imageview;
         ImageView detailviewitem_comment_imageview;
 
-TextView detailviewitem_time_textview;
+        TextView detailviewitem_time_textview;
         TextView item_update;
         TextView item_delete;
         public ViewHolder(@NonNull View itemView) {
