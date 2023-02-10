@@ -2,6 +2,7 @@ package com.example.sns.navigation;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,10 +62,12 @@ public class ItemActivity extends AppCompatActivity {
     private String destinationUid;
     private String destinationImageUri;
     private String destinationUsername;
+    private String destinationEmail;
     private String destinationtimestamp;
     private String destinationProfileUri;
     private String destinationExplain;
     ArrayList<ContentDTO> contentDTOs;
+    public ArrayList<String> contentUidList = new ArrayList<>();
     private FirebaseFirestore firestore;
     private Context context;
     private Context itemview;
@@ -90,6 +93,7 @@ public class ItemActivity extends AppCompatActivity {
         Log.d("sss", destinationUid+"");
         destinationImageUri = getIntent().getStringExtra("destinationUri");
         Log.d("sss", destinationImageUri+"");
+        destinationEmail = getIntent().getStringExtra("destinationEmail");
         destinationUsername = getIntent().getStringExtra("destinationUsername");
         destinationtimestamp = getIntent().getStringExtra("destinationtimestamp");
         destinationProfileUri = getIntent().getStringExtra("destinationProfileUri");
@@ -98,6 +102,7 @@ public class ItemActivity extends AppCompatActivity {
         detailviewitem_profile_image = findViewById(R.id.detailviewitem_profile_image);
         detailviewitem_profile_textview = findViewById(R.id.detailviewitem_profile_textview);
         detailviewitem_profile_textview.setText(destinationUsername);
+        detailviewitem_comment_imageview = findViewById(R.id.detailviewitem_comment_imageview);
 
           detailviewitem_timestamp_textview = findViewById(R.id.detailviewitem_time_textview);
         detailviewitem_timestamp_textview.setText(destinationtimestamp);
@@ -143,12 +148,31 @@ public class ItemActivity extends AppCompatActivity {
         FirebaseFirestore.getInstance().collection("contents").document().set(contentDTO);
 
 
+        detailviewitem_comment_imageview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), CommentActivity.class);
 
+ //               intent.getIntExtra("contentUid",position);
+//                intent.getIntExtra("destinationUid",position);
+//                intent.getIntExtra("destinationEmail",position);
+                intent.putExtra("contentUid", contentUid);
+                intent.putExtra("destinationUid", destinationUid);
+                intent.putExtra("destinationEmail", destinationEmail);
+
+                Log.d("id",contentUid);
+//                intent.putExtra("destinationUid",contentDTOs.get(position).getUid());
+//                intent.putExtra("destinationEmail",contentDTOs.get(position).getEmail());
+                startActivity(intent);
+            }
+        });
+
+    }
 
 
     }
 
-    }
+
 
 
 

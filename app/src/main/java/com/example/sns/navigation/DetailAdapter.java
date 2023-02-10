@@ -308,6 +308,7 @@ String username;
                 itemIntent.putExtra("destinationExplain",contentDTOs.get(position).getExplain());
                 itemIntent.putExtra("destinationProfileUri",contentDTOs.get(position).getProfileUri());
 
+               // itemIntent.putExtra("contentUid",position);
 
                 itemview.startActivity(itemIntent);
             }
